@@ -11,7 +11,6 @@ interface Product {
   images: string[];
   category?: { name: string };
 }
-
 interface PaginationMeta {
   totalItems: number;
   itemCount: number;
@@ -19,7 +18,6 @@ interface PaginationMeta {
   totalPages: number;
   currentPage: number;
 }
-
 export default function ShopPage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>('');
@@ -28,7 +26,6 @@ export default function ShopPage() {
   const [maxPrice, setMaxPrice] = useState<number>(100000);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>('');
-
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [paginationMeta, setPaginationMeta] = useState<PaginationMeta | null>(null);
   const ITEMS_PER_PAGE = 6;
@@ -43,7 +40,6 @@ export default function ShopPage() {
       setError('');
       try {
         const params = new URLSearchParams();
-
         if (selectedCategory) params.append('categoryId', selectedCategory);
         if (searchQuery) params.append('search', searchQuery);
         if (minPrice) params.append('minPrice', minPrice.toString());
@@ -51,7 +47,6 @@ export default function ShopPage() {
 
         params.append('page', currentPage.toString());
         params.append('limit', ITEMS_PER_PAGE.toString());
-
         const response = await api.get(`/products?${params}`);
 
         if (response.data.success) {
@@ -73,17 +68,14 @@ export default function ShopPage() {
 
     return () => clearTimeout(delayDebounce);
   }, [selectedCategory, searchQuery, currentPage, minPrice, maxPrice]);
-
   return (
     <main className="max-w-7xl mx-auto px-6 md:px-12 py-12 flex flex-col-reverse lg:flex-row gap-12 font-sans">
-
       <div className="flex-1 space-y-12">
         {error && (
           <div className="p-4 text-xs font-bold text-rose-700 bg-rose-50 border border-rose-200 uppercase tracking-wider text-center">
             {error}
           </div>
         )}
-
         {loading ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-y-12 gap-x-8 animate-pulse">
             {[1, 2, 3, 4, 5, 6].map((n) => (
@@ -113,7 +105,6 @@ export default function ShopPage() {
                 />
               ))}
             </div>
-
             {paginationMeta && paginationMeta.totalPages > 1 && (
               <div className="flex items-center justify-between border-t border-gray-100 pt-8 text-xs font-bold uppercase tracking-widest select-none">
                 <button
@@ -123,11 +114,9 @@ export default function ShopPage() {
                 >
                   Previous
                 </button>
-
                 <div className="text-gray-400 font-medium normal-case tracking-normal">
                   Page <span className="font-bold text-black">{currentPage}</span> of {paginationMeta.totalPages}
                 </div>
-
                 <button
                   onClick={() => setCurrentPage((prev) => Math.min(prev + 1, paginationMeta.totalPages))}
                   disabled={currentPage === paginationMeta.totalPages}
@@ -140,7 +129,6 @@ export default function ShopPage() {
           </>
         )}
       </div>
-
       <SidebarFilters
         selectedCategory={selectedCategory}
         setSelectedCategory={setSelectedCategory}

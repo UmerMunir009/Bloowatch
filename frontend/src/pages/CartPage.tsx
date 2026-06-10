@@ -29,12 +29,9 @@ export default function CartPage() {
             showToast('Cart cleared successfully!', 'success');
         }
     };
-
     return (
         <div className="min-h-screen bg-white text-black font-sans flex flex-col justify-between">
-
             <main className="w-full max-w-[1000px] mx-auto px-4 py-16 flex-grow">
-
                 <div className="bg-white rounded-card shadow-[0_4px_25px_rgba(0,0,0,0.05)] border border-gray-100 overflow-hidden mb-8">
                     <div className="w-full overflow-x-auto">
                         <table className="w-full min-w-[750px] text-left border-collapse">
@@ -47,7 +44,6 @@ export default function CartPage() {
                                     <th className="py-5 px-6 text-center">Subtotal</th>
                                 </tr>
                             </thead>
-
                             <tbody className="divide-y divide-gray-100">
                                 {loading && cartItems.length === 0 ? (
                                     <tr>
@@ -72,7 +68,6 @@ export default function CartPage() {
                                                     ✕
                                                 </button>
                                             </td>
-
                                             <td className="py-6 px-4">
                                                 <div className="flex items-center space-x-6">
                                                     <div className="w-20 h-24 bg-[#F8F8F8] flex items-center justify-center p-2 border border-gray-100">
@@ -85,11 +80,9 @@ export default function CartPage() {
                                                     <span className="font-bold text-[14px] tracking-wide text-black">{item.product.name}</span>
                                                 </div>
                                             </td>
-
                                             <td className="py-6 px-4 text-center font-medium text-gray-900">
                                                 {Number(item.product.price)}
                                             </td>
-
                                             <td className="py-6 px-4 text-center">
                                                 <div className="inline-flex items-center justify-center border border-gray-200">
                                                     <button
@@ -109,7 +102,6 @@ export default function CartPage() {
                                                     </button>
                                                 </div>
                                             </td>
-
                                             <td className="py-6 px-6 text-center font-bold text-gray-900">
                                                 {Number(item.product.price) * item.quantity}
                                             </td>
@@ -120,7 +112,6 @@ export default function CartPage() {
                         </table>
                     </div>
                 </div>
-
                 <div className="flex space-x-4 mb-20">
                     <button className="px-6 py-3 bg-primary-blue text-white font-bold text-[11px] uppercase tracking-widest rounded-btn transition-colors cursor-pointer">
                         Apply Coupon
@@ -132,33 +123,27 @@ export default function CartPage() {
                         {loading ? 'Clearing Cart...' : 'Clear Cart'}
                     </button>
                 </div>
-
                 <div className="w-full max-w-[480px]">
                     <h2 className="text-[22px] font-bold uppercase tracking-wider text-black mb-6">Cart Total</h2>
-
                     <div className="border-t border-b border-gray-100 divide-y divide-gray-100 mb-8">
                         <div className="py-4 flex justify-between items-center text-[12px]">
                             <span className="font-bold uppercase tracking-wider text-black w-1/3">Subtotal</span>
                             <span className="text-gray-600 font-medium">{subtotal}</span>
                         </div>
-
                         <div className="py-4 flex justify-between items-center text-[12px]">
                             <span className="font-bold uppercase tracking-wider text-black w-1/3">Shipping</span>
                             <span className="text-gray-400 text-left w-2/3">Enter your shipping address to see updates</span>
                         </div>
-
                         <div className="py-5 flex justify-between items-center text-[13px]">
                             <span className="font-bold uppercase tracking-wider text-black w-1/3">Total</span>
                             <span className="font-bold text-black">${subtotal}</span>
                         </div>
                     </div>
-
                     <button className="w-full py-4 bg-primary-blue  text-white font-bold text-[11px] uppercase tracking-widest rounded-btn transition-colors tracking-wide cursor-pointer">
                         Proceed to Checkout
                     </button>
                 </div>
             </main>
-
         </div>
     );
 }

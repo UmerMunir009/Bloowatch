@@ -1,19 +1,20 @@
 import { useState, useEffect } from 'react';
 import api from '../api/axiosClient';
 
-interface Category { id: string; name: string; slug: string; }
-
+interface Category {
+  id: string;
+  name: string;
+  slug: string;
+}
 export default function ManageCategories() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [name, setName] = useState('');
   const [slug, setSlug] = useState('');
   const [loading, setLoading] = useState(false);
   const [toast, setToast] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
-  
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [categoryToDelete, setCategoryToDelete] = useState<Category | null>(null);
   const [deleteLoading, setDeleteLoading] = useState(false);
-
   const fetchCategories = async () => {
     try {
       const res = await api.get('/categories');
@@ -22,14 +23,13 @@ export default function ManageCategories() {
       console.error('Failed to load categories', err);
     }
   };
-
-  useEffect(() => { fetchCategories(); }, []);
-
+  useEffect(() => {
+    fetchCategories();
+  }, []);
   const showToast = (type: 'success' | 'error', message: string) => {
     setToast({ type, message });
     setTimeout(() => setToast(null), 4000);
   };
-
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -45,30 +45,25 @@ export default function ManageCategories() {
       setLoading(false);
     }
   };
-
   const openDeleteConfirmation = (category: Category) => {
     setCategoryToDelete(category);
     setIsModalOpen(true);
   };
-
   const closeDeleteModal = () => {
     setIsModalOpen(false);
     setCategoryToDelete(null);
   };
-
   const handleDeleteCategory = async () => {
     if (!categoryToDelete) return;
     setDeleteLoading(true);
-
     try {
       const token = localStorage.getItem('token');
       const res = await api.delete(`/categories/${categoryToDelete.id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-
       if (res.data.success) {
         showToast('success', res.data.message || 'Category deleted successfully.');
-        fetchCategories(); 
+        fetchCategories();
       }
     } catch (err: any) {
       showToast('error', err.response?.data?.message || 'Could not delete target category entry.');
@@ -77,20 +72,15 @@ export default function ManageCategories() {
       closeDeleteModal();
     }
   };
-
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 relative">
-      {toast && (
-        <div className={`fixed top-6 right-6 z-50 p-4 border text-xs font-bold uppercase tracking-wider ${
-          toast.type === 'success' ? 'bg-black text-white border-black' : 'bg-rose-50 text-rose-700 border-rose-200'
-        }`}>{toast.message}</div>
-      )}
-
+      {toast &&
+        (<div className={`fixed top-6 right-6 z-50 p-4 border text-xs font-bold uppercase tracking-wider ${toast.type === 'success' ? 'bg-black text-white border-black' : 'bg-rose-50 text-rose-700 border-rose-200'}`}>{toast.message}</div>
+        )}
       <div className="lg:col-span-1 space-y-6">
         <div>
           <h1 className="text-xl font-bold uppercase tracking-tight">Create Category</h1>
         </div>
-
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="flex flex-col space-y-1.5">
             <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Category Name</label>
@@ -105,7 +95,6 @@ export default function ManageCategories() {
           </button>
         </form>
       </div>
-
       <div className="lg:col-span-2 space-y-4">
         <h2 className="text-xs font-bold uppercase tracking-widest text-gray-400">Existing Categories</h2>
         <div className="border border-gray-100 divide-y divide-gray-100 rounded-sm">
@@ -117,7 +106,6 @@ export default function ManageCategories() {
                 <div className="flex flex-col space-y-0.5">
                   <span className="text-black tracking-wide">{cat.name}</span>
                 </div>
-                
                 <button
                   onClick={() => openDeleteConfirmation(cat)}
                   className="text-gray-300 hover:text-black hover:cursor-pointer p-1 transition-colors flex items-center justify-center"
@@ -132,11 +120,9 @@ export default function ManageCategories() {
           )}
         </div>
       </div>
-
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div onClick={closeDeleteModal} className="absolute inset-0 bg-black/30 backdrop-blur-sm" />
-          
           <div className="bg-white border border-black max-w-sm w-full p-6 space-y-6 relative z-10 rounded-none shadow-sm animate-in fade-in zoom-in-95 duration-200">
             <div>
               <h3 className="text-sm font-black uppercase tracking-widest text-black">Confirm Deletion</h3>
@@ -144,7 +130,6 @@ export default function ManageCategories() {
                 Are you sure you want to permanently delete <span className="font-bold text-black uppercase">"{categoryToDelete?.name}"</span>?
               </p>
             </div>
-
             <div className="flex justify-end space-x-3 text-xs font-bold uppercase tracking-wider">
               <button
                 onClick={closeDeleteModal}

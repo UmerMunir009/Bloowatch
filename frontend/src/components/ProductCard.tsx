@@ -1,8 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { useToast } from '../hooks/useToast';
-
-
 interface ProductProps {
   id: string;
   title: string;
@@ -24,9 +22,8 @@ export default function ProductCard({ id, title, category, price, images, descri
   const { showToast } = useToast();
 
   const handleAddToCart = async (e: React.MouseEvent) => {
-    e.stopPropagation(); 
-
-    const result = await addToCart(id, 1); 
+    e.stopPropagation();
+    const result = await addToCart(id, 1);
     if (!result.success) {
       showToast(result.message || 'Failed to add item to cart', 'error');
     } else {
@@ -41,12 +38,11 @@ export default function ProductCard({ id, title, category, price, images, descri
     >
       <div className="w-full aspect-[4/3] bg-surface-grey relative rounded-sm flex items-center justify-center overflow-hidden">
         <img
-          src={images && images.length > 0 ? images[0] : '' }
+          src={images && images.length > 0 ? images[0] : ''}
           alt={title}
           className="h-[85%] w-auto object-contain pb-2 "
         />
       </div>
-
       <div className="w-full h-12 bg-surface-grey relative overflow-hidden mb-2">
         <button
           onClick={handleAddToCart}
@@ -55,15 +51,12 @@ export default function ProductCard({ id, title, category, price, images, descri
           {loading ? 'Adding...' : 'ADD TO CART'}
         </button>
       </div>
-
       <h2 className="text-[10px] md:text-[14px] uppercase font-bold text-text-dark tracking-wide mb-1  text-center">
         {title}
       </h2>
-
       <span className="text-[13px] text-primary-blue font-medium mb-3 block text-center">
         {category}
       </span>
-
       <div className="px-4 py-1.5 bg-primary-blue text-white font-bold text-[14px] min-w-[50px] text-center rounded-btn">
         $ {price}
       </div>
