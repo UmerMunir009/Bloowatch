@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect, type ReactNode, useCallback } from 'react';
+import { createContext, useContext, useState, type ReactNode, useCallback } from 'react';
 import api from '../api/axiosClient';
 import { useAuth } from './AuthContext';
 
