@@ -5,7 +5,7 @@ import { useToast } from '../hooks/useToast';
 import api from '../api/axiosClient';
 
 export default function LoginPage() {
-  const { loginState } = useAuth();
+  const { loginState,loading,setLoading } = useAuth();
   const navigate = useNavigate();
   const { showToast } = useToast();
   const [showPassword, setShowPassword] = useState(false);
@@ -29,6 +29,7 @@ export default function LoginPage() {
     }
 
     try {
+      setLoading(true);
       const response = await api.post('/auth/login', { email, password });
       const result = response.data;
 
@@ -42,6 +43,8 @@ export default function LoginPage() {
     } catch (err: any) {
       const errorMsg = err.response?.data?.message || 'Invalid email or password';
       showToast(errorMsg, 'error');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -92,7 +95,7 @@ export default function LoginPage() {
             type="submit"
             className="w-full py-3 bg-primary-blue text-white font-bold text-[14px] rounded transition-colors tracking-wide mt-4 cursor-pointer"
           >
-            Login
+            {loading ? 'Logging in...' : 'Login'}
           </button>
         </form>
 
