@@ -6,9 +6,10 @@ import api from '../api/axiosClient';
 
 export default function RegisterPage() {
   const navigate = useNavigate();
-  const { loginState,loading,setLoading } = useAuth();
+  const { loginState } = useAuth();
   const { showToast } = useToast();
   const [showPassword, setShowPassword] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
 
   const [formData, setFormData] = useState({
     name: '',
@@ -38,7 +39,7 @@ export default function RegisterPage() {
     }
 
     try {
-      setLoading(true);
+      setSubmitting(true);
       const response = await api.post('/auth/register', formData);
       const result = response.data;
 
@@ -53,7 +54,7 @@ export default function RegisterPage() {
       const errorMsg = err.response?.data?.message || 'Cannot connect to authorization server';
       showToast(errorMsg, 'error');
     } finally {
-      setLoading(false);
+      setSubmitting(false);
     }
   };
 
@@ -125,7 +126,7 @@ export default function RegisterPage() {
             type="submit"
             className="w-full py-3 bg-primary-blue text-white font-bold text-[14px] rounded transition-colors tracking-wide mt-2 cursor-pointer"
           >
-            {loading ? 'Registering...' : 'Register'}
+            {submitting ? 'Registering...' : 'Register'}
           </button>
         </form>
 
