@@ -28,12 +28,12 @@ export function ToastProvider({ children }: { children: ReactNode }) {
               : 'bg-rose-600 border-rose-500'}`}
           >
             {toast.type === 'success' ? (
-              <svg className="w-5 h-5 shrink-0" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+              <svg className="w-5 h-5 shrink-0 toast-icon" viewBox="0 0 24 24">
+                <path d="M4.5 12.75l6 6 9-13.5" />
               </svg>
             ) : (
-              <svg className="w-5 h-5 shrink-0" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
+              <svg className="w-5 h-5 shrink-0 toast-icon" viewBox="0 0 24 24">
+                <path d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
               </svg>
             )}
             <span>{toast.message}</span>

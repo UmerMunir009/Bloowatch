@@ -3,20 +3,20 @@
 @theme {
   --color-primary-blue: #1A2B8C;
   --color-brand-blue: #1469C4;
-  
+
   --color-accent-teal: #00BCD4;
   --color-accent-orange: #F57C00;
-  
+
   --color-surface-grey: #F5F5F5;
   --color-surface-grey-alt: #F8F8F8;
-  
+
   --color-text-dark: #1A1A1A;
   --color-text-secondary: #616161;
-  
+
   --color-footer-bg: #000000;
 
   --font-sans: 'Inter', 'Helvetica Neue', sans-serif;
-  
+
   --radius-btn: 4px;
   --radius-card: 8px;
   --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.08);
@@ -26,4 +26,52 @@
   body {
     font-family: var(--font-sans);
   }
+}
+.nav-icon,
+.toast-icon,
+.email-icon,
+.name-icon,
+.password-icon,
+.arrow-icon {
+  fill: none;
+  stroke: currentColor;
+}
+.nav-icon path,
+.toast-icon path,
+.email-icon path,
+.password-icon path,
+.arrow-icon path {
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.nav-icon { stroke-width: 2; }
+.toast-icon { stroke-width: 2.5; }
+.email-icon { stroke-width: 3; }
+.name-icon { stroke-width: 2; }
+.password-icon { stroke-width: 3.5; }
+.arrow-icon { stroke-width: 3; }
+
+.price-range-thumb {
+  pointer-events: none;
+}
+.price-range-thumb::-webkit-slider-thumb {
+  pointer-events: all;
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #1A2B8C;
+  cursor: pointer;
+  border: none;
+  box-shadow: none;
+}
+.price-range-thumb::-moz-range-thumb {
+  pointer-events: all;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #1A2B8C;
+  cursor: pointer;
+  border: none;
 }
