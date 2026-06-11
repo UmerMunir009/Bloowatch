@@ -1,22 +1,26 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from '../api/axiosClient';
+
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
       navigate('/dashboard', { replace: true });
     }
   }, [navigate]);
+
   const handleLogin = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     setLoading(true);
     setError('');
+
     try {
       const res = await axios.post('/auth/login', {
         email,
@@ -26,6 +30,7 @@ export default function LoginPage() {
       const { token, user } = res.data.data;
       localStorage.setItem('token', token);
       localStorage.setItem('user', JSON.stringify(user));
+
       navigate('/dashboard');
     } catch (err: any) {
       setError(err.response?.data?.message || 'Invalid administrative credentials.');
@@ -33,6 +38,7 @@ export default function LoginPage() {
       setLoading(false);
     }
   };
+  
   return (
     <main className="h-screen w-screen flex items-center justify-center bg-white font-sans text-black">
       <form onSubmit={handleLogin} className="w-full max-w-sm p-8 space-y-6">

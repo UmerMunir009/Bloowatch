@@ -11,6 +11,7 @@ export default function ProtectedRoute({ element }: ProtectedRouteProps) {
   const { showToast } = useToast();
   const location = useLocation();
   const hasShownToast = useRef(false);
+
   useEffect(() => {
     if (!loading && !isAuthenticated && !hasShownToast.current) {
       showToast('Please log in first to access this page.', 'error');
@@ -21,5 +22,6 @@ export default function ProtectedRoute({ element }: ProtectedRouteProps) {
   if (!isAuthenticated) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
+  
   return element;
 }

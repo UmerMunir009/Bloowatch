@@ -5,6 +5,7 @@ interface Category {
   id: string;
   name: string;
 }
+
 export default function AddProduct() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(false);
@@ -16,11 +17,13 @@ export default function AddProduct() {
   const [stock, setStock] = useState('');
   const [description, setDescription] = useState('');
   const fileInputRef = useRef<HTMLInputElement>(null);
+
   useEffect(() => {
     api.get('/categories')
       .then(res => { if (res.data.success) setCategories(res.data.data); })
       .catch(err => console.error(err));
   }, []);
+
   const showToast = (type: 'success' | 'error', message: string) => {
     setToast({ type, message });
     setTimeout(() => setToast(null), 4000);
@@ -31,6 +34,7 @@ export default function AddProduct() {
     setName(value);
     setSlug(value.toLowerCase().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-'));
   };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -45,13 +49,17 @@ export default function AddProduct() {
     if (fileInputRef.current?.files) {
       Array.from(fileInputRef.current.files).forEach(file => formData.append('files', file));
     }
+
     try {
       const token = localStorage.getItem('token');
+
       await api.post('/products', formData, {
         headers: { 'Content-Type': 'multipart/form-data', Authorization: `Bearer ${token}` }
       });
+
       showToast('success', 'Product uploaded successfully.');
       setName(''); setSlug(''); setCategoryId(''); setPrice(''); setStock(''); setDescription('');
+
       if (fileInputRef.current) fileInputRef.current.value = '';
     } catch (err: any) {
       showToast('error', err.response?.data?.message || 'Transaction compilation failed.');
@@ -59,6 +67,7 @@ export default function AddProduct() {
       setLoading(false);
     }
   };
+  
   return (
     <div>
       {toast && (

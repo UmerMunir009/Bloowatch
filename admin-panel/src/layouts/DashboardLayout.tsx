@@ -5,16 +5,20 @@ export default function DashboardLayout() {
   const location = useLocation();
   const navigate = useNavigate();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
   const handleLogout = () => {
     localStorage.clear();
     navigate('/login');
   };
+
   const navItems = [
     { name: 'Products', path: '/dashboard' },
     { name: 'Add New Product', path: '/dashboard/add-product' },
     { name: 'Manage Categories', path: '/dashboard/categories' },
   ];
+
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
+  
   return (
     <div className="flex h-screen w-screen bg-white font-sans text-black overflow-hidden relative">
       <header className="lg:hidden absolute top-0 left-0 right-0 h-16 border-b border-gray-100 px-6 flex items-center justify-between bg-white z-30">

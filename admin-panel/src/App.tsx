@@ -11,6 +11,7 @@ export default function App() {
     <Router>
       <Routes>
         <Route path="/login" element={<LoginPage />} />
+
         <Route element={<ProtectedRoute />}>
           <Route path="/dashboard" element={<DashboardLayout />}>
             <Route index element={<ProductsList />} />
@@ -18,6 +19,7 @@ export default function App() {
             <Route path="categories" element={<ManageCategories />} />
           </Route>
         </Route>
+
         <Route path="*" element={<Navigate to="/dashboard" replace />} />
       </Routes>
     </Router>

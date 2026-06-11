@@ -22,10 +22,12 @@ export default function LoginPage() {
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
+
     if (!formData.email.trim() || !formData.password.trim()) {
       showToast('Please fill out all login parameters', 'error');
       return;
     }
+
     try {
       setGlobalLoading(true);
       const response = await api.post('/auth/login', formData);
@@ -45,6 +47,7 @@ export default function LoginPage() {
       setGlobalLoading(false);
     }
   };
+  
   return (
     <div className="min-h-[65vh] w-full flex items-center justify-center bg-white px-4 py-16 font-sans">
       <div className="w-full max-w-[460px] bg-white rounded-md shadow-[0_4px_25px_rgba(0,0,0,0.07)] p-10 border border-gray-100">

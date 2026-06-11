@@ -18,12 +18,15 @@ export default function ProductCard({ id, title, category, price, images, descri
       state: { id, title, category, price, images, description }
     });
   };
+
   const { addToCart, loading } = useCart();
   const { showToast } = useToast();
 
   const handleAddToCart = async (e: React.MouseEvent) => {
     e.stopPropagation();
+
     const result = await addToCart(id, 1);
+    
     if (!result.success) {
       showToast(result.message || 'Failed to add item to cart', 'error');
     } else {

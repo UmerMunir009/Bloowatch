@@ -15,6 +15,7 @@ interface PaginationMeta {
   totalPages: number;
   currentPage: number;
 }
+
 export default function ProductsList() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
@@ -30,10 +31,13 @@ export default function ProductsList() {
   const [editLoading, setEditLoading] = useState(false);
   const [editPrice, setEditPrice] = useState('');
   const [editStock, setEditStock] = useState('');
+
   const getProducts = async () => {
     try {
       setLoading(true);
+
       const res = await api.get(`/products?page=${currentPage}&limit=${ITEMS_PER_PAGE}`);
+
       if (res.data.success) {
         const nestedData = res.data.data;
         const verifiedArray = Array.isArray(nestedData) ? nestedData : nestedData?.data || [];
@@ -47,29 +51,37 @@ export default function ProductsList() {
       setLoading(false);
     }
   };
+
   useEffect(() => {
     getProducts();
   }, [currentPage]);
+
   const showToast = (type: 'success' | 'error', message: string) => {
     setToast({ type, message });
     setTimeout(() => setToast(null), 4000);
   };
+
   const openDeleteConfirmation = (product: Product) => {
     setProductToDelete(product);
     setIsDeleteModalOpen(true);
   };
+
   const closeDeleteModal = () => {
     setIsDeleteModalOpen(false);
     setProductToDelete(null);
   };
+
   const handleDeleteProduct = async () => {
     if (!productToDelete) return;
     setDeleteLoading(true);
+
     try {
       const token = localStorage.getItem('token');
+
       const res = await api.delete(`/products/${productToDelete.id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
+
       if (res.data.success) {
         showToast('success', res.data.message || 'Product removed from catalog.');
         
@@ -86,22 +98,27 @@ export default function ProductsList() {
       closeDeleteModal();
     }
   };
+
   const openEditModal = (product: Product) => {
     setProductToEdit(product);
     setEditPrice(product.price.toString());
     setEditStock(product.stock_quantity.toString());
     setIsEditModalOpen(true);
   };
+
   const closeEditModal = () => {
     setIsEditModalOpen(false);
     setProductToEdit(null);
   };
+
   const handleUpdateProduct = async (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!productToEdit) return;
     setEditLoading(true);
+
     try {
       const token = localStorage.getItem('token');
+
       const res = await api.patch(`/products/${productToEdit.id}`, {
         price: Number(editPrice),
         stock_quantity: Number(editStock),
@@ -114,12 +131,14 @@ export default function ProductsList() {
         getProducts();
         closeEditModal();
       }
+
     } catch (err: any) {
       showToast('error', err.response?.data?.message || 'Failed to update product variants.');
     } finally {
       setEditLoading(false);
     }
   };
+  
   return (
     <div className="space-y-6 relative">
       {toast && (

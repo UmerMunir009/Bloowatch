@@ -6,6 +6,7 @@ interface Category {
   name: string;
   slug: string;
 }
+
 export default function ManageCategories() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [name, setName] = useState('');
@@ -15,6 +16,7 @@ export default function ManageCategories() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [categoryToDelete, setCategoryToDelete] = useState<Category | null>(null);
   const [deleteLoading, setDeleteLoading] = useState(false);
+
   const fetchCategories = async () => {
     try {
       const res = await api.get('/categories');
@@ -23,21 +25,28 @@ export default function ManageCategories() {
       console.error('Failed to load categories', err);
     }
   };
+
   useEffect(() => {
     fetchCategories();
   }, []);
+
   const showToast = (type: 'success' | 'error', message: string) => {
     setToast({ type, message });
     setTimeout(() => setToast(null), 4000);
   };
+
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     setLoading(true);
+
     try {
       const token = localStorage.getItem('token');
+
       await api.post('/categories', { name, slug }, { headers: { Authorization: `Bearer ${token}` } });
+
       showToast('success', 'Category added.');
       setName(''); setSlug('');
+
       fetchCategories();
     } catch (err: any) {
       showToast('error', err.response?.data?.message || 'Error processing category logic.');
@@ -45,26 +54,33 @@ export default function ManageCategories() {
       setLoading(false);
     }
   };
+
   const openDeleteConfirmation = (category: Category) => {
     setCategoryToDelete(category);
     setIsModalOpen(true);
   };
+
   const closeDeleteModal = () => {
     setIsModalOpen(false);
     setCategoryToDelete(null);
   };
+
   const handleDeleteCategory = async () => {
     if (!categoryToDelete) return;
     setDeleteLoading(true);
+
     try {
       const token = localStorage.getItem('token');
+
       const res = await api.delete(`/categories/${categoryToDelete.id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
+
       if (res.data.success) {
         showToast('success', res.data.message || 'Category deleted successfully.');
         fetchCategories();
       }
+
     } catch (err: any) {
       showToast('error', err.response?.data?.message || 'Could not delete target category entry.');
     } finally {
@@ -72,6 +88,7 @@ export default function ManageCategories() {
       closeDeleteModal();
     }
   };
+  
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 relative">
       {toast &&

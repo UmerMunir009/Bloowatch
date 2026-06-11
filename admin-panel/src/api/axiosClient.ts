@@ -6,6 +6,7 @@ const api = axios.create({
     'Content-Type': 'application/json',
   },
 });
+
 api.interceptors.response.use(
   (response) => response,
   (error) => {
@@ -14,7 +15,9 @@ api.interceptors.response.use(
       localStorage.removeItem('user');
       window.location.href = '/login';
     }
+
     return Promise.reject(error);
   }
 );
+
 export default api;

@@ -11,6 +11,7 @@ interface Product {
   images: string[];
   category?: { name: string };
 }
+
 interface PaginationMeta {
   totalItems: number;
   itemCount: number;
@@ -18,6 +19,7 @@ interface PaginationMeta {
   totalPages: number;
   currentPage: number;
 }
+
 export default function ShopPage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>('');
@@ -68,6 +70,7 @@ export default function ShopPage() {
 
     return () => clearTimeout(delayDebounce);
   }, [selectedCategory, searchQuery, currentPage, minPrice, maxPrice]);
+  
   return (
     <main className="max-w-7xl mx-auto px-6 md:px-12 py-12 flex flex-col-reverse lg:flex-row gap-12 font-sans">
       <div className="flex-1 space-y-12">

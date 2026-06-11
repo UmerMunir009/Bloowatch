@@ -14,6 +14,7 @@ interface SidebarFiltersProps {
   maxPrice: number;
   setMaxPrice: (val: number) => void;
 }
+
 export default function SidebarFilters({
   selectedCategory,
   setSelectedCategory,
@@ -26,6 +27,7 @@ export default function SidebarFilters({
 }: SidebarFiltersProps) {
   const [categories, setCategories] = useState<Category[]>([]);
   const MAX = 100000;
+
   useEffect(() => {
     const getCategories = async () => {
       try {
@@ -37,6 +39,7 @@ export default function SidebarFilters({
     };
     getCategories();
   }, []);
+
   const handleMinChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = Math.min(Number(e.target.value), maxPrice - 1);
     setMinPrice(val);
@@ -46,8 +49,10 @@ export default function SidebarFilters({
     const val = Math.max(Number(e.target.value), minPrice + 1);
     setMaxPrice(val);
   };
+
   const minPercent = (minPrice / MAX) * 100;
   const maxPercent = (maxPrice / MAX) * 100;
+  
   return (
     <aside className="w-full lg:w-56 space-y-8 select-none font-sans">
       <div>

@@ -11,6 +11,7 @@ interface RouterLocationState {
     price: number;
     description?: string;
 }
+
 export default function ProductDetailPage() {
     const location = useLocation();
     const { addToCart, loading } = useCart();
@@ -39,6 +40,7 @@ export default function ProductDetailPage() {
             showToast('Item added to cart successfully!', 'success');
         }
     };
+    
     return (
         <main className="max-w-7xl mx-auto px-6 md:px-12 py-12 font-sans text-text-dark">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start mb-16">

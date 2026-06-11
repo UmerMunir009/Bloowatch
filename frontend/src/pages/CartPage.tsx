@@ -29,6 +29,7 @@ export default function CartPage() {
             showToast('Cart cleared successfully!', 'success');
         }
     };
+    
     return (
         <div className="min-h-screen bg-white text-black font-sans flex flex-col justify-between">
             <main className="w-full max-w-[1000px] mx-auto px-4 py-16 flex-grow">

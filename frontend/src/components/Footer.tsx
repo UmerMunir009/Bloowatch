@@ -6,6 +6,7 @@ import insta5 from '../assets/images/instagram-5.png';
 
 export default function Footer() {
     const instagramImages = [insta1, insta2, insta3, insta4, insta5];
+    
     return (
         <footer className="w-full bg-footer-bg text-white pt-16 pb-12 px-12 mt-auto">
             <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 text-xs leading-relaxed text-gray-400">

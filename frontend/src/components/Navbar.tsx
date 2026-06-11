@@ -21,6 +21,7 @@ export default function Navbar() {
     if (!user || !user.name) return 'U';
     return user.name.charAt(0).toUpperCase();
   };
+  
   return (
     <header className="w-full bg-white border-b border-gray-200 px-6 md:px-12 py-4 relative z-50 font-sans select-none">
       <div className="max-w-8xl mx-auto flex items-center justify-between">

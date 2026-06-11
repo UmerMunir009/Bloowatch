@@ -21,19 +21,25 @@ export default function RegisterPage() {
       navigate('/', { replace: true });
     }
   }, [navigate]);
+
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
+
     if (!formData.name.trim() || !formData.email.trim() || !formData.password.trim()) {
       showToast('All fields are required', 'error');
       return;
     }
+
     if (formData.password.length < 6) {
       showToast('Password must be at least 6 characters', 'error');
       return;
     }
+
     try {
       setGlobalLoading(true);
+
       const response = await api.post('/auth/register', formData);
+
       const result = response.data;
       if (result.success) {
         showToast(result.message || 'User registered successfully!', 'success');
@@ -42,6 +48,7 @@ export default function RegisterPage() {
       } else {
         showToast(result.message || 'Registration failed', 'error');
       }
+
     } catch (err: any) {
       const errorMsg = err.response?.data?.message || 'Cannot connect to authorization server';
       showToast(errorMsg, 'error');
@@ -49,6 +56,7 @@ export default function RegisterPage() {
       setGlobalLoading(false);
     }
   };
+  
   return (
     <div className="min-h-[70vh] w-full flex items-center justify-center bg-white px-4 py-16 font-sans">
       <div className="w-full max-w-[460px] bg-white rounded-md shadow-[0_4px_25px_rgba(0,0,0,0.07)] p-10 border border-gray-100">
