@@ -144,11 +144,11 @@ export default function ProductDetailPage() {
                         </div>
                         <div>
                             <span className="text-text-dark">CATEGORIES:</span>
-                            <span className="text-gray-500 font-normal ml-1">{categories.map(cat => cat.name).join(', ')} </span>
+                            <span className="text-gray-500 font-normal ml-1">{categories.map(category => category.name).join(', ')} </span>
                         </div>
                         <div>
                             <span className="text-text-dark">TAGS:</span>
-                            <span className="text-gray-500 font-normal ml-1">{categories.map(cat => cat.name).join(', ')}</span>
+                            <span className="text-gray-500 font-normal ml-1">{categories.map(category => category.name).join(', ')}</span>
                         </div>
                     </div>
                 </div>

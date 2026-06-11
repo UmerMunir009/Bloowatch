@@ -10,7 +10,7 @@ async function bootstrap() {
     logger: ['error', 'warn', 'log'],
   });
   app.enableCors({
-    origin: ['https://bloowatch-frontend.vercel.app', 'https://bloowatch-admin.vercel.app'], 
+    origin: ['https://bloowatch-frontend.vercel.app', 'https://bloowatch-admin.vercel.app','http://localhost:5173','http://localhost:5174'], 
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
   });

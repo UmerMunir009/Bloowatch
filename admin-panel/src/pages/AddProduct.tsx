@@ -35,7 +35,7 @@ export default function AddProduct() {
   };
   const toggleCategory = (id: string) => {
     setCategoryIds(prev =>
-      prev.includes(id) ? prev.filter(c => c !== id) : [...prev, id]
+      prev.includes(id) ? prev.filter(categoryId => categoryId !== id) : [...prev, id]
     );
   };
 

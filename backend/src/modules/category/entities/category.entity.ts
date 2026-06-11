@@ -19,7 +19,7 @@ export class Category {
   @Column({ unique: true, length: 150 })
   slug: string;
 
-  @OneToMany(() => ProductCategory, (pc) => pc.category)
+  @OneToMany(() => ProductCategory, (productCategory) => productCategory.category)
   productCategories: ProductCategory[];
 
   @CreateDateColumn({ name: 'created_at' })
