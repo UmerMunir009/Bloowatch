@@ -3,9 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../hooks/useToast';
 import api from '../api/axiosClient';
-import email_icon from '../assets/svgs/email.svg'
-import name_icon from '../assets/svgs/name.svg'
-import password_icon from '../assets/svgs/password.svg'
 
 export default function RegisterPage() {
   const navigate = useNavigate();
@@ -68,9 +65,7 @@ export default function RegisterPage() {
         
         <form className="space-y-4" onSubmit={handleSubmit} noValidate>
           <div className="relative flex items-center">
-            <span className="absolute left-4 text-gray-400">
-              <img className='h-6 w-6' src={name_icon} />
-            </span>
+            <span className="name-icon absolute left-4 h-6 w-6" />
             <input 
               type="text" 
               placeholder="Name" 
@@ -81,9 +76,7 @@ export default function RegisterPage() {
           </div>
 
           <div className="relative flex items-center">
-            <span className="absolute left-4 text-gray-400">
-              <img className='h-6 w-6' src={email_icon} />
-            </span>
+            <span className="email-icon absolute left-4 h-6 w-6" />
             <input 
               type="email" 
               placeholder="Email" 
@@ -94,9 +87,7 @@ export default function RegisterPage() {
           </div>
 
           <div className="relative flex items-center">
-            <span className="absolute left-4 text-gray-400">
-              <img className='h-6 w-6' src={password_icon} />
-            </span>
+            <span className="password-icon absolute left-4 h-6 w-6" />
             <input 
               type={showPassword ? 'text' : 'password'} 
               placeholder="Password" 

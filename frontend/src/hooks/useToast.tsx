@@ -1,6 +1,4 @@
 import  { useState, createContext, useContext,type ReactNode } from 'react';
-import caution_icon from '../assets/svgs/caution.svg'
-import tick_icon from '../assets/svgs/tick.svg'
 
 type ToastType = 'success' | 'error';
 
@@ -29,11 +27,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
               ? 'bg-emerald-600 border-emerald-500' 
               : 'bg-rose-600 border-rose-500'}`}
           >
-            {toast.type === 'success' ? (
-              <img className='h-7 w-7' src={tick_icon}/>
-            ) : (
-              <img className='h-7 w-7' src={caution_icon}/>
-            )}
+            <div className={`h-7 w-7 ${toast.type === 'success' ? 'tick-icon' : 'caution-icon'}`} />
             <span>{toast.message}</span>
           </div>
         </div>

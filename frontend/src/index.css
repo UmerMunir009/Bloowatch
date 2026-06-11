@@ -51,3 +51,57 @@
   cursor: pointer;
   border: none;
 }
+.name-icon {
+  background-image: url('/src/assets/svgs/name.svg');
+  background-size: contain;
+  background-position: center;
+}
+
+.email-icon {
+  background-image: url('/src/assets/svgs/email.svg');
+  background-size: contain;
+  background-position: center;
+}
+
+.password-icon {
+  background-image: url('/src/assets/svgs/password.svg');
+  background-size: contain;
+  background-position: center;
+}
+
+.up-arrow-icon {
+  background-image: url('/src/assets/svgs/up-arrow.svg');
+  background-size: contain;
+  background-position: center;
+}
+
+.down-arrow-icon {
+  background-image: url('/src/assets/svgs/down-arrow.svg');
+  background-size: contain;
+  background-position: center;
+}
+
+.tick-icon {
+  background-image: url('/src/assets/svgs/tick.svg');
+  background-size: contain;
+  background-position: center;
+  filter: brightness(0) invert(1);
+}
+
+.caution-icon {
+  background-image: url('/src/assets/svgs/caution.svg');
+  background-size: contain;
+  background-position: center;
+  filter: brightness(0) invert(1);
+}
+.cross-icon {
+  background-image: url('/src/assets/svgs/cross.svg');
+  background-size: contain;
+  background-position: center;
+}
+
+.grid-icon {
+  background-image: url('/src/assets/svgs/grid.svg');
+  background-size: contain;
+  background-position: center;
+}
