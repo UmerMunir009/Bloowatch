@@ -3,6 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../hooks/useToast';
 import logo from '../assets/images/logo.png';
+import cross_icon from '../assets/svgs/cross.svg'
+import grid_icon from '../assets/svgs/grid.svg'
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -62,13 +64,13 @@ export default function Navbar() {
           className="md:hidden p-2 text-text-dark hover:text-brand-blue transition-colors focus:outline-none cursor-pointer"
           aria-label="Toggle navigation menu"
         >
-          <svg className="w-8 h-8 nav-icon" viewBox="0 0 24 24">
             {isOpen ? (
-              <path d="M6 18L18 6M6 6l12 12" />
+              <img className='h-6 w-6' src={cross_icon} />
+
             ) : (
-              <path d="M4 6h16M4 12h16M4 18h16" />
+              <img className='h-6 w-6' src={grid_icon} />
+
             )}
-          </svg>
         </button>
       </div>
 

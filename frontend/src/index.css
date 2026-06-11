@@ -27,30 +27,6 @@
     font-family: var(--font-sans);
   }
 }
-.nav-icon,
-.toast-icon,
-.email-icon,
-.name-icon,
-.password-icon,
-.arrow-icon {
-  fill: none;
-  stroke: currentColor;
-}
-.nav-icon path,
-.toast-icon path,
-.email-icon path,
-.password-icon path,
-.arrow-icon path {
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-.nav-icon { stroke-width: 2; }
-.toast-icon { stroke-width: 2.5; }
-.email-icon { stroke-width: 3; }
-.name-icon { stroke-width: 2; }
-.password-icon { stroke-width: 3.5; }
-.arrow-icon { stroke-width: 3; }
-
 .price-range-thumb {
   pointer-events: none;
 }

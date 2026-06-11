@@ -2,6 +2,9 @@ import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { useToast } from '../hooks/useToast';
+import up_arrow from '../assets/svgs/up-arrow.svg';
+import down_arrow from '../assets/svgs/down-arrow.svg';
+
 
 
 interface RouterLocationState {
@@ -102,12 +105,7 @@ export default function ProductDetailPage() {
                                     onClick={increment}
                                     className="w-full flex items-center justify-center text-black hover:text-brand-blue cursor-pointer transition-colors"
                                 >
-                                    <svg
-                                        className="w-3 h-3 arrow-icon"
-                                        viewBox="0 0 24 24"
-                                    >
-                                        <path d="M4.5 15.75l7.5-7.5 7.5 7.5" />
-                                    </svg>
+                                    <img className='h-2 w-2' src={up_arrow}/>
                                 </button>
 
                                 <div className="w-full h-[2px] bg-black" />
@@ -116,12 +114,7 @@ export default function ProductDetailPage() {
                                     onClick={decrement}
                                     className="w-full flex items-center justify-center text-black hover:text-brand-blue cursor-pointer transition-colors"
                                 >
-                                    <svg
-                                        className="w-3 h-3 arrow-icon"
-                                        viewBox="0 0 24 24"
-                                    >
-                                        <path d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-                                    </svg>
+                                    <img className='h-2 w-2' src={down_arrow}/>
                                 </button>
                             </div>
                         </div>

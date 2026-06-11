@@ -3,6 +3,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../hooks/useToast';
 import api from '../api/axiosClient';
+import email_icon from '../assets/svgs/email.svg'
+import name_icon from '../assets/svgs/name.svg'
+import password_icon from '../assets/svgs/password.svg'
 
 export default function RegisterPage() {
   const navigate = useNavigate();
@@ -66,9 +69,7 @@ export default function RegisterPage() {
         <form className="space-y-4" onSubmit={handleSubmit} noValidate>
           <div className="relative flex items-center">
             <span className="absolute left-4 text-gray-400">
-              <svg className="w-4 h-4 name-icon" viewBox="0 0 24 24">
-                <path d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
-              </svg>
+              <img className='h-6 w-6' src={name_icon} />
             </span>
             <input 
               type="text" 
@@ -81,9 +82,7 @@ export default function RegisterPage() {
 
           <div className="relative flex items-center">
             <span className="absolute left-4 text-gray-400">
-              <svg className="w-4 h-4 email-icon" viewBox="0 0 24 24">
-                <path d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
-              </svg>
+              <img className='h-6 w-6' src={email_icon} />
             </span>
             <input 
               type="email" 
@@ -96,9 +95,7 @@ export default function RegisterPage() {
 
           <div className="relative flex items-center">
             <span className="absolute left-4 text-gray-400">
-              <svg className="w-4 h-4 password-icon" viewBox="0 0 24 24">
-                <path d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
-              </svg>
+              <img className='h-6 w-6' src={password_icon} />
             </span>
             <input 
               type={showPassword ? 'text' : 'password'} 
