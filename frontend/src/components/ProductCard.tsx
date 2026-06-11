@@ -7,26 +7,26 @@ interface ProductProps {
   id: string;
   title: string;
   images: string[];
-  category: string;
+  categories: { id: string; name: string }[];
   price: number;
   description: string;
 }
 
-export default function ProductCard({ id, title, category, price, images, description }: ProductProps) {
+export default function ProductCard({ id, title, categories, price, images, description }: ProductProps) {
   const navigate = useNavigate();
 
   const handleNavigation = () => {
     navigate(`/product/${id}`, {
-      state: { id, title, category, price, images, description }
+      state: { id, title, categories, price, images, description }
     });
   };
   const { addToCart, loading } = useCart();
   const { showToast } = useToast();
 
   const handleAddToCart = async (e: React.MouseEvent) => {
-    e.stopPropagation(); 
+    e.stopPropagation();
 
-    const result = await addToCart(id, 1); 
+    const result = await addToCart(id, 1);
     if (!result.success) {
       showToast(result.message || 'Failed to add item to cart', 'error');
     } else {
@@ -41,7 +41,7 @@ export default function ProductCard({ id, title, category, price, images, descri
     >
       <div className="w-full aspect-[4/3] bg-surface-grey relative rounded-sm flex items-center justify-center overflow-hidden">
         <img
-          src={images && images.length > 0 ? images[0] : '' }
+          src={images && images.length > 0 ? images[0] : ''}
           alt={title}
           className="h-[85%] w-auto object-contain pb-2 "
         />
@@ -61,7 +61,7 @@ export default function ProductCard({ id, title, category, price, images, descri
       </h2>
 
       <span className="text-[13px] text-primary-blue font-medium mb-3 block text-center">
-        {category}
+        {categories.map(cat => cat.name).join(', ')}
       </span>
 
       <div className="px-4 py-1.5 bg-primary-blue text-white font-bold text-[14px] min-w-[50px] text-center rounded-btn">

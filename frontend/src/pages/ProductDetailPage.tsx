@@ -8,7 +8,7 @@ interface RouterLocationState {
     id: string;
     title: string;
     images: string[];   
-    category: string;
+    categories: { id: string; name: string }[];
     price: number;
     description?: string;
 }
@@ -21,7 +21,7 @@ export default function ProductDetailPage() {
     const productData = location.state as RouterLocationState | null;
     const title = productData?.title || 'Unknown Product';
     const price = productData?.price || 0;
-    const category = productData?.category || 'Uncategorized';
+    const categories = productData?.categories || [];
     const imgSrc = productData?.images?.[0] || '';
     const description = productData?.description || 'No description';
 
@@ -144,11 +144,11 @@ export default function ProductDetailPage() {
                         </div>
                         <div>
                             <span className="text-text-dark">CATEGORIES:</span>
-                            <span className="text-gray-500 font-normal ml-1">{category} </span>
+                            <span className="text-gray-500 font-normal ml-1">{categories.map(cat => cat.name).join(', ')} </span>
                         </div>
                         <div>
                             <span className="text-text-dark">TAGS:</span>
-                            <span className="text-gray-500 font-normal ml-1">{category}w</span>
+                            <span className="text-gray-500 font-normal ml-1">{categories.map(cat => cat.name).join(', ')}</span>
                         </div>
                     </div>
                 </div>

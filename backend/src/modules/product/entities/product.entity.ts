@@ -4,24 +4,18 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-  ManyToOne,
+  OneToMany,
   JoinColumn,
 } from 'typeorm';
-import { Category } from '../../category/entities/category.entity';
+import { ProductCategory } from './product-category.entity';
 
 @Entity('products')
 export class Product {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ name: 'category_id', type: 'uuid', nullable: true })
-  categoryId: string;
-
-  @ManyToOne(() => Category, (category) => category.products, {
-    onDelete: 'SET NULL',
-  })
-  @JoinColumn({ name: 'category_id' })
-  category: Category;
+  @OneToMany(() => ProductCategory, (pc) => pc.product)
+  productCategories: ProductCategory[];
 
   @Column({ length: 255 })
   name: string;

@@ -1,9 +1,10 @@
-import { IsNotEmpty, IsString, IsNumberString, IsOptional, IsUUID, MaxLength } from 'class-validator';
+import { IsNotEmpty, IsString, IsNumberString, IsOptional, IsUUID, MaxLength, IsArray} from 'class-validator';
 
 export class CreateProductDto {
-  @IsUUID()
+  @IsUUID('all', { each: true })
+  @IsArray()
   @IsNotEmpty()
-  categoryId: string;
+  categoryIds: string[];
 
   @IsString()
   @IsNotEmpty()
