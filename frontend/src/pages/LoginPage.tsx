@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../hooks/useToast';
 import api from '../api/axiosClient';
+import { ToastType } from '../utils/constants';
 
 export default function LoginPage() {
   const { loginState } = useAuth();
@@ -25,7 +26,7 @@ export default function LoginPage() {
     e.preventDefault();
 
     if (!email.trim() || !password.trim()) {
-      showToast('Please fill out all login parameters', 'error');
+      showToast('Please fill out all login parameters', ToastType.Error);
       return;
     }
 
@@ -35,15 +36,15 @@ export default function LoginPage() {
       const result = response.data;
 
       if (result.success) {
-        showToast('Logged in successfully!', 'success');
+        showToast('Logged in successfully!', ToastType.Success);
         loginState(result.data.token, result.data.user);
         navigate('/');
       } else {
-        showToast(result.message || 'Invalid email or password', 'error');
+        showToast(result.message || 'Invalid email or password', ToastType.Error);
       }
     } catch (err: any) {
       const errorMsg = err.response?.data?.message || 'Invalid email or password';
-      showToast(errorMsg, 'error');
+      showToast(errorMsg, ToastType.Error);
     } finally {
       setSubmitting(false);
     }

@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../hooks/useToast';
 import api from '../api/axiosClient';
+import { ToastType } from '../utils/constants';
 
 export default function RegisterPage() {
   const navigate = useNavigate();
@@ -29,12 +30,12 @@ export default function RegisterPage() {
     e.preventDefault();
 
     if (!formData.name.trim() || !formData.email.trim() || !formData.password.trim()) {
-      showToast('All fields are required', 'error');
+      showToast('All fields are required', ToastType.Error);
       return;
     }
 
     if (formData.password.length < 6) {
-      showToast('Password must be at least 6 characters', 'error');
+      showToast('Password must be at least 6 characters', ToastType.Error);
       return;
     }
 
@@ -44,15 +45,15 @@ export default function RegisterPage() {
       const result = response.data;
 
       if (result.success) {
-        showToast(result.message || 'User registered successfully!', 'success');
+        showToast(result.message || 'User registered successfully!', ToastType.Success);
         loginState(result.data.token, result.data.user);
         navigate('/');
       } else {
-        showToast(result.message || 'Registration failed', 'error');
+        showToast(result.message || 'Registration failed', ToastType.Error);
       }
     } catch (err: any) {
       const errorMsg = err.response?.data?.message || 'Cannot connect to authorization server';
-      showToast(errorMsg, 'error');
+      showToast(errorMsg, ToastType.Error);
     } finally {
       setSubmitting(false);
     }

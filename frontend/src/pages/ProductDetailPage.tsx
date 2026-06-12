@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { useToast } from '../hooks/useToast';
+import { ToastType } from '../utils/constants';
 
 
 interface RouterLocationState {
@@ -39,9 +40,9 @@ export default function ProductDetailPage() {
 
         const result = await addToCart(productData.id, quantity);
         if (!result.success) {
-            showToast(result.message || 'Failed to add item to cart', 'error');
+            showToast(result.message || 'Failed to add item to cart',ToastType.Error );
         } else {
-            showToast('Item added to cart successfully!', 'success');
+            showToast('Item added to cart successfully!', ToastType.Success);
         }
     };
 

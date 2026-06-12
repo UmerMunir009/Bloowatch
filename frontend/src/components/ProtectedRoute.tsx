@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../hooks/useToast';
+import { ToastType } from '../utils/constants';
 
 interface ProtectedRouteProps {
   element: React.ReactElement;
@@ -16,7 +17,7 @@ export default function ProtectedRoute({ element }: ProtectedRouteProps) {
 
   useEffect(() => {
     if (!loading && !isAuthenticated && !hasShownToast.current) {
-      showToast('Please log in first to access this page.', 'error');
+      showToast('Please log in first to access this page.', ToastType.Error);
       hasShownToast.current = true; 
     }
   }, [isAuthenticated, loading, showToast]);

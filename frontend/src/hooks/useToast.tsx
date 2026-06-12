@@ -1,6 +1,5 @@
 import  { useState, createContext, useContext,type ReactNode } from 'react';
-
-type ToastType = 'success' | 'error';
+import { ToastType } from '../utils/constants';
 
 interface ToastContextType {
   showToast: (message: string, type?: ToastType) => void;
@@ -11,7 +10,7 @@ const ToastContext = createContext<ToastContextType | undefined>(undefined);
 export function ToastProvider({ children }: { children: ReactNode }) {
   const [toast, setToast] = useState<{ message: string; type: ToastType } | null>(null);
 
-  const showToast = (message: string, type: ToastType = 'success') => {
+  const showToast = (message: string, type: ToastType = ToastType.Success) => {
     setToast({ message, type });
     setTimeout(() => setToast(null), 3000);
   };
@@ -23,11 +22,11 @@ export function ToastProvider({ children }: { children: ReactNode }) {
       {toast && (
         <div className="fixed top-5 right-5 z-[9999] animate-fade-in-down font-sans">
           <div className={`px-6 py-3.5 rounded shadow-xl text-white text-[14px] font-bold tracking-wide flex items-center gap-3 min-w-[280px] border
-            ${toast.type === 'success' 
+            ${toast.type === ToastType.Success 
               ? 'bg-emerald-600 border-emerald-500' 
               : 'bg-rose-600 border-rose-500'}`}
           >
-            {toast.type === 'success' ? (
+            {toast.type === ToastType.Success? (
               <svg className="w-5 h-5 shrink-0" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
               </svg>

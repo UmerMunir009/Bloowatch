@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { useToast } from '../hooks/useToast';
+import { ToastType } from '../utils/constants';
 
 
 interface ProductProps {
@@ -28,9 +29,9 @@ export default function ProductCard({ id, title, categories, price, images, desc
 
     const result = await addToCart(id, 1);
     if (!result.success) {
-      showToast(result.message || 'Failed to add item to cart', 'error');
+      showToast(result.message || 'Failed to add item to cart', ToastType.Error);
     } else {
-      showToast('Item added to cart successfully!', 'success');
+      showToast('Item added to cart successfully!', ToastType.Success);
     }
   };
 
