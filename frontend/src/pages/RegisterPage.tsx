@@ -7,11 +7,9 @@ import { ToastType } from '../utils/constants';
 
 export default function RegisterPage() {
   const navigate = useNavigate();
-  const { loginState } = useAuth();
+  const { loginState, globalLoading, setGlobalLoading, token } = useAuth();
   const { showToast } = useToast();
   const [showPassword, setShowPassword] = useState(false);
-  const [submitting, setSubmitting] = useState(false);
-
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -20,9 +18,8 @@ export default function RegisterPage() {
   });
 
   useEffect(() => {
-    const token = localStorage.getItem('auth_token');
     if (token) {
-      navigate('/', { replace: true }); 
+      navigate('/', { replace: true });
     }
   }, [navigate]);
 
@@ -40,10 +37,11 @@ export default function RegisterPage() {
     }
 
     try {
-      setSubmitting(true);
-      const response = await api.post('/auth/register', formData);
-      const result = response.data;
+      setGlobalLoading(true);
 
+      const response = await api.post('/auth/register', formData);
+
+      const result = response.data;
       if (result.success) {
         showToast(result.message || 'User registered successfully!', ToastType.Success);
         loginState(result.data.token, result.data.user);
@@ -51,26 +49,22 @@ export default function RegisterPage() {
       } else {
         showToast(result.message || 'Registration failed', ToastType.Error);
       }
+
     } catch (err: any) {
       const errorMsg = err.response?.data?.message || 'Cannot connect to authorization server';
       showToast(errorMsg, ToastType.Error);
     } finally {
-      setSubmitting(false);
+      setGlobalLoading(false);
     }
   };
-
+  
   return (
     <div className="min-h-[70vh] w-full flex items-center justify-center bg-white px-4 py-16 font-sans">
       <div className="w-full max-w-[460px] bg-white rounded-md shadow-[0_4px_25px_rgba(0,0,0,0.07)] p-10 border border-gray-100">
         <h2 className="text-[22px] font-bold text-black mb-6">Register</h2>
-        
         <form className="space-y-4" onSubmit={handleSubmit} noValidate>
           <div className="relative flex items-center">
-            <span className="absolute left-4 text-gray-400">
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
-              </svg>
-            </span>
+            <span className="name-icon absolute left-4 h-6 w-6" />
             <input 
               type="text" 
               placeholder="Name" 
@@ -79,13 +73,8 @@ export default function RegisterPage() {
               className="w-full pl-11 pr-4 py-3 border border-gray-200 text-[14px] text-black placeholder:text-gray-400 rounded outline-none focus:border-brand-blue transition-colors"
             />
           </div>
-
           <div className="relative flex items-center">
-            <span className="absolute left-4 text-gray-400">
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
-              </svg>
-            </span>
+            <span className="email-icon absolute left-4 h-6 w-6" />
             <input 
               type="email" 
               placeholder="Email" 
@@ -94,13 +83,8 @@ export default function RegisterPage() {
               className="w-full pl-11 pr-4 py-3 border border-gray-200 text-[14px] text-black placeholder:text-gray-400 rounded outline-none focus:border-brand-blue transition-colors"
             />
           </div>
-
           <div className="relative flex items-center">
-            <span className="absolute left-4 text-gray-400">
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
-              </svg>
-            </span>
+            <span className="password-icon absolute left-4 h-6 w-6" />
             <input 
               type={showPassword ? 'text' : 'password'} 
               placeholder="Password" 
@@ -116,21 +100,18 @@ export default function RegisterPage() {
               {showPassword ? 'Hide' : 'Show'}
             </button>
           </div>
-
           <p className="text-[12px] text-gray-500 text-center px-4 leading-relaxed pt-2">
             By registering up, you confirm that you have read and accepted our{' '}
             <a href="#notice" className="text-blue-800 font-bold hover:underline">User Notice</a> and{' '}
             <a href="#privacy" className="text-blue-800 font-bold hover:underline">Privacy Policy</a>.
           </p>
-
-          <button 
+          <button
             type="submit"
             className="w-full py-3 bg-primary-blue text-white font-bold text-[14px] rounded transition-colors tracking-wide mt-2 cursor-pointer"
           >
-            {submitting ? 'Registering...' : 'Register'}
+            {globalLoading ? 'Registering...' : 'Register'}
           </button>
         </form>
-
         <div className="mt-6 text-center text-[13px]">
           <div>
             <span className="text-gray-500">Already have an account? </span>

@@ -12,7 +12,6 @@ export default function ProtectedRoute({ element }: ProtectedRouteProps) {
   const { isAuthenticated } = useAuth();
   const { showToast } = useToast();
   const location = useLocation();
-  
   const hasShownToast = useRef(false);
 
   useEffect(() => {
@@ -25,6 +24,6 @@ export default function ProtectedRoute({ element }: ProtectedRouteProps) {
   if (!isAuthenticated) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
-
+  
   return element;
 }

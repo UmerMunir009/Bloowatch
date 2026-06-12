@@ -3,20 +3,20 @@
 @theme {
   --color-primary-blue: #1A2B8C;
   --color-brand-blue: #1469C4;
-  
+
   --color-accent-teal: #00BCD4;
   --color-accent-orange: #F57C00;
-  
+
   --color-surface-grey: #F5F5F5;
   --color-surface-grey-alt: #F8F8F8;
-  
+
   --color-text-dark: #1A1A1A;
   --color-text-secondary: #616161;
-  
+
   --color-footer-bg: #000000;
 
   --font-sans: 'Inter', 'Helvetica Neue', sans-serif;
-  
+
   --radius-btn: 4px;
   --radius-card: 8px;
   --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.08);
@@ -26,4 +26,83 @@
   body {
     font-family: var(--font-sans);
   }
+}
+.price-range-thumb {
+  pointer-events: none;
+}
+
+.price-range-thumb::-webkit-slider-thumb {
+  pointer-events: all;
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #1A2B8C;
+  cursor: pointer;
+  border: none;
+  box-shadow: none;
+}
+.price-range-thumb::-moz-range-thumb {
+  pointer-events: all;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #1A2B8C;
+  cursor: pointer;
+  border: none;
+}
+.name-icon {
+  background-image: url('/src/assets/svgs/name.svg');
+  background-size: contain;
+  background-position: center;
+}
+
+.email-icon {
+  background-image: url('/src/assets/svgs/email.svg');
+  background-size: contain;
+  background-position: center;
+}
+
+.password-icon {
+  background-image: url('/src/assets/svgs/password.svg');
+  background-size: contain;
+  background-position: center;
+}
+
+.up-arrow-icon {
+  background-image: url('/src/assets/svgs/up-arrow.svg');
+  background-size: contain;
+  background-position: center;
+}
+
+.down-arrow-icon {
+  background-image: url('/src/assets/svgs/down-arrow.svg');
+  background-size: contain;
+  background-position: center;
+}
+
+.tick-icon {
+  background-image: url('/src/assets/svgs/tick.svg');
+  background-size: contain;
+  background-position: center;
+  filter: brightness(0) invert(1);
+}
+
+.caution-icon {
+  background-image: url('/src/assets/svgs/caution.svg');
+  background-size: contain;
+  background-position: center;
+  filter: brightness(0) invert(1);
+}
+.cross-icon {
+  background-image: url('/src/assets/svgs/cross.svg');
+  background-size: contain;
+  background-position: center;
+}
+
+.grid-icon {
+  background-image: url('/src/assets/svgs/grid.svg');
+  background-size: contain;
+  background-position: center;
 }

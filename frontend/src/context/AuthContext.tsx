@@ -8,20 +8,21 @@ interface User {
   createdAt: string;
   updatedAt: string;
 }
-
 interface AuthContextType {
   user: User | null;
   token: string | null;
   isAuthenticated: boolean;
   loginState: (token: string, user: User) => void;
   logoutState: () => void;
+  globalLoading: boolean;
+  setGlobalLoading: (value: boolean) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
-
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [token, setToken] = useState<string | null>(null);
+  const [globalLoading, setGlobalLoading] = useState(false);
 
   useEffect(() => {
     const storedToken = localStorage.getItem('auth_token');
@@ -48,7 +49,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, token, isAuthenticated: !!token, loginState, logoutState }}>
+    <AuthContext.Provider value={{ user, token, isAuthenticated: !!token, loginState, logoutState, globalLoading, setGlobalLoading }}>
       {children}
     </AuthContext.Provider>
   );

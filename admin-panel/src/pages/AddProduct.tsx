@@ -42,7 +42,6 @@ export default function AddProduct() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-
     const formData = new FormData();
     formData.append('name', name);
     formData.append('slug', slug);
@@ -57,6 +56,7 @@ export default function AddProduct() {
 
     try {
       const token = localStorage.getItem('token');
+
       await api.post('/products', formData, {
         headers: { 'Content-Type': 'multipart/form-data', Authorization: `Bearer ${token}` }
       });
@@ -70,7 +70,7 @@ export default function AddProduct() {
       setLoading(false);
     }
   };
-
+  
   return (
     <div>
       {toast && (
@@ -79,11 +79,9 @@ export default function AddProduct() {
           {toast.message}
         </div>
       )}
-
       <div className="mb-6">
         <h1 className="text-xl font-bold uppercase tracking-tight">Add Product</h1>
       </div>
-
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="flex flex-col space-y-1.5">
@@ -111,7 +109,6 @@ export default function AddProduct() {
             <input type="text" required value={slug} onChange={(e) => setSlug(e.target.value)} className="border border-gray-200 px-3 py-2 text-xs focus:outline-none focus:border-black rounded-none" />
           </div>
         </div>
-
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="flex flex-col space-y-1.5">
             <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Base Price ($ USD)</label>
@@ -122,17 +119,14 @@ export default function AddProduct() {
             <input type="number" required placeholder="12" value={stock} onChange={(e) => setStock(e.target.value)} className="border border-gray-200 px-3 py-2 text-xs focus:outline-none focus:border-black rounded-none" />
           </div>
         </div>
-
         <div className="flex flex-col space-y-1.5">
           <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Upload Image Assets (Max 5)</label>
           <input type="file" multiple accept="image/*" ref={fileInputRef} className="border border-gray-200 px-3 py-2 text-xs text-gray-400 file:mr-4 file:py-1 file:px-3 file:border-0 file:text-[10px] file:font-bold file:uppercase file:bg-black file:text-white cursor-pointer rounded-none" />
         </div>
-
         <div className="flex flex-col space-y-1.5">
           <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Description Copy</label>
           <textarea rows={4} required placeholder="Technical data summary..." value={description} onChange={(e) => setDescription(e.target.value)} className="border border-gray-200 px-3 py-2 text-xs focus:outline-none focus:border-black resize-none rounded-none" />
         </div>
-
         <button type="submit" disabled={loading} className="bg-black text-white px-6 py-2.5 text-xs font-bold uppercase tracking-widest hover:bg-gray-900 transition-colors disabled:bg-gray-200 rounded-none cursor-pointer">
           {loading ? 'Uploading...' : 'Upload Product'}
         </button>
