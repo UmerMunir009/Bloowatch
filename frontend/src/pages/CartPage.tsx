@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useCart } from '../context/CartContext';
 import { useToast } from '../hooks/useToast';
+import { ToastType } from '../utils/constants';
 
 export default function CartPage() {
     const { cartItems, getCart, loading, updateQuantity, removeFromCart, clearCart } = useCart();
@@ -15,18 +16,18 @@ export default function CartPage() {
     const removeItemFromCart = async (cartItemId: string) => {
         const result = await removeFromCart(cartItemId);
         if (!result.success) {
-            showToast(result.message || 'Failed to remove item from cart', 'error');
+            showToast(result.message || 'Failed to remove item from cart', ToastType.Error);
         } else {
-            showToast('Item removed from cart successfully!', 'success');
+            showToast('Item removed from cart successfully!', ToastType.Success);
         }
     };
 
     const clearEntireCart = async () => {
         const result = await clearCart();
         if (!result.success) {
-            showToast(result.message || 'Failed to clear cart', 'error');
+            showToast(result.message || 'Failed to clear cart', ToastType.Error);
         } else {
-            showToast('Cart cleared successfully!', 'success');
+            showToast('Cart cleared successfully!', ToastType.Success);
         }
     };
     

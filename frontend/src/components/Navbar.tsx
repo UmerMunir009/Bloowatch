@@ -3,6 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../hooks/useToast';
 import logo from '../assets/images/logo.png';
+import { ToastType } from '../utils/constants';
+
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -12,7 +14,7 @@ export default function Navbar() {
 
   const handleLogout = () => {
     logoutState();
-    showToast('Logged out successfully', 'success');
+    showToast('Logged out successfully', ToastType.Success);
     setIsOpen(false);
     navigate('/login');
   };
