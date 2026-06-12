@@ -9,7 +9,7 @@ interface Product {
   price: string | number;
   description: string;
   images: string[];
-  category?: { name: string };
+  categories?: { id: string; name: string }[];
 }
 
 interface PaginationMeta {
@@ -102,7 +102,7 @@ export default function ShopPage() {
                   id={product.id}
                   title={product.name}
                   images={product?.images || []}
-                  category={product.category?.name || 'Catalog'}
+                  categories={product.categories || []}
                   price={Number(product.price)}
                   description={product.description}
                 />

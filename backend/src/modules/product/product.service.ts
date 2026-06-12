@@ -2,9 +2,9 @@ import { Injectable, NotFoundException, ConflictException } from '@nestjs/common
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, ILike, Between } from 'typeorm';
 import { Product } from './entities/product.entity';
+import { ProductCategory } from './entities/product-category.entity';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
-import { CategoryService } from '../category/category.service';
 import { v2 as cloudinary, UploadApiResponse } from 'cloudinary';
 import { ProductFilterDto } from './dto/product-filter.dto';
 
@@ -17,7 +17,8 @@ export class ProductService {
   constructor(
     @InjectRepository(Product)
     private readonly productRepository: Repository<Product>,
-    private readonly categoryService: CategoryService,
+    @InjectRepository(ProductCategory)
+    private readonly productCategoryRepository: Repository<ProductCategory>,
     private readonly redisService: RedisService,
   ) { }
 
@@ -39,15 +40,9 @@ export class ProductService {
   }
 
   async create(createProductDto: CreateProductDto, files: any[]): Promise<Product> {
-    const category = await this.categoryService.findOne(createProductDto.categoryId);
-    if (!category) {
-      throw new NotFoundException(`Category with ${createProductDto.categoryId} not found`);
-    }
-
     const existingProduct = await this.productRepository.findOne({
       where: { name: createProductDto.name }
     });
-
     if (existingProduct) {
       throw new ConflictException('Product with this name already exists');
     }
@@ -58,15 +53,22 @@ export class ProductService {
       const uploadResults = await Promise.all(uploadPromises);
       uploadResults.forEach((result) => imageUrls.push(result.secure_url));
     }
-
+    const { categoryIds, ...productData } = createProductDto;
     const product = this.productRepository.create({
-      ...createProductDto,
+      ...productData,
       images: imageUrls,
     });
-
+    const savedProduct = await this.productRepository.save(product);
+    const productCategories = createProductDto.categoryIds.map(categoryId =>
+      this.productCategoryRepository.create({
+        productId: savedProduct.id,
+        categoryId
+      })
+    );
+    await this.productCategoryRepository.save(productCategories);
     await this.invalidateProductsCache();
 
-    return await this.productRepository.save(product);
+    return savedProduct;
   }
 
   async findAll(filterDto: ProductFilterDto) {
@@ -79,7 +81,7 @@ export class ProductService {
     }
     const whereConditions: any = {};
     if (categoryId) {
-      whereConditions.categoryId = categoryId;
+      whereConditions.productCategories = { categoryId };
     }
 
     if (search) {
@@ -92,15 +94,28 @@ export class ProductService {
 
     const [products, totalItems] = await this.productRepository.findAndCount({
       where: whereConditions,
-      relations: ['category'],
+      relations: ['productCategories', 'productCategories.category'],
       order: { createdAt: 'DESC' },
       skip: filterDto.skip,
       take: limit,
     });
+    const cleanedProducts = products.map(product => ({
+      id: product.id,
+      name: product.name,
+      slug: product.slug,
+      description: product.description,
+      price: product.price,
+      stock_quantity: product.stock_quantity,
+      images: product.images,
+      categories: product.productCategories.map(pc => ({
+        id: pc.category.id,
+        name: pc.category.name,
+      })),
+    }));
+
     const result = {
-      data: products,
+      data: cleanedProducts,
       meta: {
-        totalItems,
         itemCount: products.length,
         itemsPerPage: limit,
         totalPages: Math.ceil(totalItems / limit),
@@ -114,7 +129,7 @@ export class ProductService {
   async findOne(id: string): Promise<Product> {
     const product = await this.productRepository.findOne({
       where: { id },
-      relations: ['category'],
+      relations: ['productCategories', 'productCategories.category'],
     });
 
     if (!product) {
@@ -138,7 +153,7 @@ export class ProductService {
     try {
       await this.invalidateProductsCache();
       return await this.productRepository.save(product);
-      
+
     } catch (error) {
       throw new ConflictException('Product compilation clash: Name or Slug might conflict');
     }
@@ -152,7 +167,7 @@ export class ProductService {
 
 
 
-   private async invalidateProductsCache(): Promise<void> {
+  private async invalidateProductsCache(): Promise<void> {
     const keys = await this.redisService.keys(
       `${CACHE_KEYS.ALL_PRODUCTS}*`,
     );

@@ -6,7 +6,7 @@ import {
   UpdateDateColumn,
   OneToMany,
 } from 'typeorm';
-import { Product } from '../../product/entities/product.entity';
+import { ProductCategory } from '../../product/entities/product-category.entity';
 
 @Entity('categories')
 export class Category {
@@ -19,8 +19,8 @@ export class Category {
   @Column({ unique: true, length: 150 })
   slug: string;
 
-  @OneToMany(() => Product, (product) => product.category)
-  products: Product[];
+  @OneToMany(() => ProductCategory, (productCategory) => productCategory.category)
+  productCategories: ProductCategory[];
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;

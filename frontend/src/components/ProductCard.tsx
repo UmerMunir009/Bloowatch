@@ -5,17 +5,17 @@ interface ProductProps {
   id: string;
   title: string;
   images: string[];
-  category: string;
+  categories: { id: string; name: string }[];
   price: number;
   description: string;
 }
 
-export default function ProductCard({ id, title, category, price, images, description }: ProductProps) {
+export default function ProductCard({ id, title, categories, price, images, description }: ProductProps) {
   const navigate = useNavigate();
 
   const handleNavigation = () => {
     navigate(`/product/${id}`, {
-      state: { id, title, category, price, images, description }
+      state: { id, title, categories, price, images, description }
     });
   };
 
@@ -26,7 +26,6 @@ export default function ProductCard({ id, title, category, price, images, descri
     e.stopPropagation();
 
     const result = await addToCart(id, 1);
-    
     if (!result.success) {
       showToast(result.message || 'Failed to add item to cart', 'error');
     } else {
@@ -58,7 +57,7 @@ export default function ProductCard({ id, title, category, price, images, descri
         {title}
       </h2>
       <span className="text-[13px] text-primary-blue font-medium mb-3 block text-center">
-        {category}
+        {categories.map(cat => cat.name).join(', ')}
       </span>
       <div className="px-4 py-1.5 bg-primary-blue text-white font-bold text-[14px] min-w-[50px] text-center rounded-btn">
         $ {price}

@@ -5,14 +5,13 @@ interface Category {
   id: string;
   name: string;
 }
-
 export default function AddProduct() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(false);
   const [toast, setToast] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
   const [name, setName] = useState('');
   const [slug, setSlug] = useState('');
-  const [categoryId, setCategoryId] = useState('');
+  const [categoryIds, setCategoryIds] = useState<string[]>([]);
   const [price, setPrice] = useState('');
   const [stock, setStock] = useState('');
   const [description, setDescription] = useState('');
@@ -34,6 +33,11 @@ export default function AddProduct() {
     setName(value);
     setSlug(value.toLowerCase().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-'));
   };
+  const toggleCategory = (id: string) => {
+    setCategoryIds(prev =>
+      prev.includes(id) ? prev.filter(categoryId => categoryId !== id) : [...prev, id]
+    );
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -41,7 +45,7 @@ export default function AddProduct() {
     const formData = new FormData();
     formData.append('name', name);
     formData.append('slug', slug);
-    formData.append('categoryId', categoryId);
+    categoryIds.forEach(id => formData.append('categoryIds[]', id));
     formData.append('price', price);
     formData.append('stock_quantity', stock);
     formData.append('description', description);
@@ -58,8 +62,7 @@ export default function AddProduct() {
       });
 
       showToast('success', 'Product uploaded successfully.');
-      setName(''); setSlug(''); setCategoryId(''); setPrice(''); setStock(''); setDescription('');
-
+      setName(''); setSlug(''); setCategoryIds([]); setPrice(''); setStock(''); setDescription('');
       if (fileInputRef.current) fileInputRef.current.value = '';
     } catch (err: any) {
       showToast('error', err.response?.data?.message || 'Transaction compilation failed.');
@@ -82,11 +85,20 @@ export default function AddProduct() {
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="flex flex-col space-y-1.5">
-            <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Category</label>
-            <select required value={categoryId} onChange={(e) => setCategoryId(e.target.value)} className="bg-white border border-gray-200 px-3 py-2 text-xs rounded-none focus:outline-none focus:border-black">
-              <option value="">Select Category...</option>
-              {categories.map(cat => <option key={cat.id} value={cat.id}>{cat.name}</option>)}
-            </select>
+            <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Categories</label>
+            <div className="border border-gray-200 px-3 py-2 space-y-2 max-h-40 overflow-y-auto">
+              {categories.map(cat => (
+                <label key={cat.id} className="flex items-center gap-2 text-xs cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={categoryIds.includes(cat.id)}
+                    onChange={() => toggleCategory(cat.id)}
+                    className="cursor-pointer"
+                  />
+                  {cat.name}
+                </label>
+              ))}
+            </div>
           </div>
           <div className="flex flex-col space-y-1.5">
             <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Product Title</label>
