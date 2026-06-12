@@ -1,11 +1,9 @@
 import { useEffect, useState } from 'react';
 import api from '../api/axiosClient';
-
 interface Category {
   id: string;
   name: string;
 }
-
 interface SidebarFiltersProps {
   selectedCategory: string;
   setSelectedCategory: (id: string) => void;
@@ -54,10 +52,9 @@ export default function SidebarFilters({
 
   const minPercent = (minPrice / MAX) * 100;
   const maxPercent = (maxPrice / MAX) * 100;
-
+  
   return (
     <aside className="w-full lg:w-56 space-y-8 select-none font-sans">
-
       <div>
         <h3 className="text-xs font-bold uppercase tracking-widest text-black mb-3">Search</h3>
         <input
@@ -68,10 +65,8 @@ export default function SidebarFilters({
           className="w-full bg-white border border-gray-200 px-3 py-2 text-sm text-gray-500 placeholder-gray-400 focus:outline-none focus:border-gray-400 transition-colors rounded-none"
         />
       </div>
-
       <div>
         <h3 className="text-xs font-bold uppercase tracking-widest text-black mb-4">Price</h3>
-
         <div className="relative h-1 bg-gray-200 rounded-full mb-4">
           <div
             className="absolute h-1 bg-blue-600 rounded-full"
@@ -96,21 +91,18 @@ export default function SidebarFilters({
             className="absolute w-full h-1 appearance-none bg-transparent cursor-pointer price-range-thumb pointer-enents-none"
           />
         </div>
-
         <p className="text-sm text-gray-700 mt-3">
           Price: ${minPrice.toLocaleString()} — ${maxPrice.toLocaleString()}
         </p>
       </div>
-
       <div>
         <h3 className="text-xs font-bold uppercase tracking-widest text-black mb-3">Categories</h3>
         <ul className="space-y-1 text-sm">
           <li>
             <button
               onClick={() => setSelectedCategory('')}
-              className={`w-full text-left py-0.5 transition-colors ${
-                selectedCategory === '' ? 'text-black font-semibold' : 'text-gray-500 hover:text-black'
-              }`}
+              className={`w-full text-left py-0.5 transition-colors ${selectedCategory === '' ? 'text-black font-semibold' : 'text-gray-500 hover:text-black'
+                }`}
             >
               All Products
             </button>
@@ -119,9 +111,8 @@ export default function SidebarFilters({
             <li key={cat.id}>
               <button
                 onClick={() => setSelectedCategory(cat.id)}
-                className={`w-full text-left py-0.5 transition-colors cursor-pointer truncate ${
-                  selectedCategory === cat.id ? 'text-black font-semibold' : 'text-gray-500 hover:text-black'
-                }`}
+                className={`w-full text-left py-0.5 transition-colors cursor-pointer truncate ${selectedCategory === cat.id ? 'text-black font-semibold' : 'text-gray-500 hover:text-black'
+                  }`}
               >
                 {cat.name}
               </button>
@@ -129,8 +120,6 @@ export default function SidebarFilters({
           ))}
         </ul>
       </div>
-
-     
     </aside>
   );
 }

@@ -6,11 +6,9 @@ import api from '../api/axiosClient';
 
 export default function RegisterPage() {
   const navigate = useNavigate();
-  const { loginState } = useAuth();
+  const { loginState, globalLoading, setGlobalLoading, token } = useAuth();
   const { showToast } = useToast();
   const [showPassword, setShowPassword] = useState(false);
-  const [submitting, setSubmitting] = useState(false);
-
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -19,9 +17,8 @@ export default function RegisterPage() {
   });
 
   useEffect(() => {
-    const token = localStorage.getItem('auth_token');
     if (token) {
-      navigate('/', { replace: true }); 
+      navigate('/', { replace: true });
     }
   }, [navigate]);
 
@@ -39,10 +36,11 @@ export default function RegisterPage() {
     }
 
     try {
-      setSubmitting(true);
-      const response = await api.post('/auth/register', formData);
-      const result = response.data;
+      setGlobalLoading(true);
 
+      const response = await api.post('/auth/register', formData);
+
+      const result = response.data;
       if (result.success) {
         showToast(result.message || 'User registered successfully!', 'success');
         loginState(result.data.token, result.data.user);
@@ -50,19 +48,19 @@ export default function RegisterPage() {
       } else {
         showToast(result.message || 'Registration failed', 'error');
       }
+
     } catch (err: any) {
       const errorMsg = err.response?.data?.message || 'Cannot connect to authorization server';
       showToast(errorMsg, 'error');
     } finally {
-      setSubmitting(false);
+      setGlobalLoading(false);
     }
   };
-
+  
   return (
     <div className="min-h-[70vh] w-full flex items-center justify-center bg-white px-4 py-16 font-sans">
       <div className="w-full max-w-[460px] bg-white rounded-md shadow-[0_4px_25px_rgba(0,0,0,0.07)] p-10 border border-gray-100">
         <h2 className="text-[22px] font-bold text-black mb-6">Register</h2>
-        
         <form className="space-y-4" onSubmit={handleSubmit} noValidate>
           <div className="relative flex items-center">
             <span className="name-icon absolute left-4 h-6 w-6" />
@@ -74,7 +72,6 @@ export default function RegisterPage() {
               className="w-full pl-11 pr-4 py-3 border border-gray-200 text-[14px] text-black placeholder:text-gray-400 rounded outline-none focus:border-brand-blue transition-colors"
             />
           </div>
-
           <div className="relative flex items-center">
             <span className="email-icon absolute left-4 h-6 w-6" />
             <input 
@@ -85,7 +82,6 @@ export default function RegisterPage() {
               className="w-full pl-11 pr-4 py-3 border border-gray-200 text-[14px] text-black placeholder:text-gray-400 rounded outline-none focus:border-brand-blue transition-colors"
             />
           </div>
-
           <div className="relative flex items-center">
             <span className="password-icon absolute left-4 h-6 w-6" />
             <input 
@@ -103,21 +99,18 @@ export default function RegisterPage() {
               {showPassword ? 'Hide' : 'Show'}
             </button>
           </div>
-
           <p className="text-[12px] text-gray-500 text-center px-4 leading-relaxed pt-2">
             By registering up, you confirm that you have read and accepted our{' '}
             <a href="#notice" className="text-blue-800 font-bold hover:underline">User Notice</a> and{' '}
             <a href="#privacy" className="text-blue-800 font-bold hover:underline">Privacy Policy</a>.
           </p>
-
-          <button 
+          <button
             type="submit"
             className="w-full py-3 bg-primary-blue text-white font-bold text-[14px] rounded transition-colors tracking-wide mt-2 cursor-pointer"
           >
-            {submitting ? 'Registering...' : 'Register'}
+            {globalLoading ? 'Registering...' : 'Register'}
           </button>
         </form>
-
         <div className="mt-6 text-center text-[13px]">
           <div>
             <span className="text-gray-500">Already have an account? </span>

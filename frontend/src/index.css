@@ -30,6 +30,7 @@
 .price-range-thumb {
   pointer-events: none;
 }
+
 .price-range-thumb::-webkit-slider-thumb {
   pointer-events: all;
   -webkit-appearance: none;

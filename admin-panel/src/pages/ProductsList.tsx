@@ -10,7 +10,6 @@ interface Product {
   stock_quantity: number;
   category?: { name: string };
 }
-
 interface PaginationMeta {
   totalItems: number;
   itemCount: number;
@@ -23,15 +22,12 @@ export default function ProductsList() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [toast, setToast] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
-
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [paginationMeta, setPaginationMeta] = useState<PaginationMeta | null>(null);
   const ITEMS_PER_PAGE = 10;
-
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [productToDelete, setProductToDelete] = useState<Product | null>(null);
   const [deleteLoading, setDeleteLoading] = useState(false);
-
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [productToEdit, setProductToEdit] = useState<Product | null>(null);
   const [editLoading, setEditLoading] = useState(false);
@@ -41,13 +37,13 @@ export default function ProductsList() {
   const getProducts = async () => {
     try {
       setLoading(true);
+
       const res = await api.get(`/products?page=${currentPage}&limit=${ITEMS_PER_PAGE}`);
-      
+
       if (res.data.success) {
         const nestedData = res.data.data;
         const verifiedArray = Array.isArray(nestedData) ? nestedData : nestedData?.data || [];
         const metadata = nestedData?.meta || null;
-
         setProducts(verifiedArray);
         setPaginationMeta(metadata);
       }
@@ -80,8 +76,10 @@ export default function ProductsList() {
   const handleDeleteProduct = async () => {
     if (!productToDelete) return;
     setDeleteLoading(true);
+
     try {
       const token = localStorage.getItem('token');
+
       const res = await api.delete(`/products/${productToDelete.id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -103,7 +101,6 @@ export default function ProductsList() {
     }
   };
 
-
   const openEditModal = (product: Product) => {
     setProductToEdit(product);
     setEditPrice(product.price.toString());
@@ -123,6 +120,7 @@ export default function ProductsList() {
 
     try {
       const token = localStorage.getItem('token');
+
       const res = await api.patch(`/products/${productToEdit.id}`, {
         price: Number(editPrice),
         stock_quantity: Number(editStock),
@@ -135,13 +133,14 @@ export default function ProductsList() {
         getProducts();
         closeEditModal();
       }
+
     } catch (err: any) {
       showToast('error', err.response?.data?.message || 'Failed to update product variants.');
     } finally {
       setEditLoading(false);
     }
   };
-
+  
   return (
     <div className="space-y-6 relative">
       {toast && (
@@ -149,12 +148,10 @@ export default function ProductsList() {
           toast.type === 'success' ? 'bg-black text-white border-black' : 'bg-rose-50 text-rose-700 border-rose-200'
         }`}>{toast.message}</div>
       )}
-
       <div>
         <h1 className="text-xl font-bold uppercase tracking-tight">Inventory</h1>
         <p className="text-xs text-gray-400 mt-0.5">Dashboard for tracking all compiled platform items.</p>
       </div>
-
       {loading ? (
         <div className="text-xs text-gray-400 animate-pulse uppercase tracking-widest">Querying live data states...</div>
       ) : products.length === 0 ? (
@@ -189,7 +186,6 @@ export default function ProductsList() {
                       >
                         <img className='h-4 w-4' src={edit_icon} />
                       </button>
-
                       <button
                         onClick={() => openDeleteConfirmation(prod)}
                         className="text-gray-300 hover:text-rose-600 hover:cursor-pointer p-1 transition-colors inline-flex items-center justify-center"
@@ -203,7 +199,6 @@ export default function ProductsList() {
               </tbody>
             </table>
           </div>
-
           {paginationMeta && paginationMeta.totalPages > 1 && (
             <div className="flex items-center justify-between pt-4 text-xs font-bold uppercase tracking-widest select-none">
               <button
@@ -213,11 +208,9 @@ export default function ProductsList() {
               >
                 Prev
               </button>
-
               <div className="text-gray-400 font-medium normal-case tracking-normal">
                 Page <span className="font-bold text-black">{currentPage}</span> of {paginationMeta.totalPages}
               </div>
-
               <button
                 onClick={() => setCurrentPage((prev) => Math.min(prev + 1, paginationMeta.totalPages))}
                 disabled={currentPage === paginationMeta.totalPages}
@@ -229,7 +222,6 @@ export default function ProductsList() {
           )}
         </div>
       )}
-
       {isDeleteModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div onClick={closeDeleteModal} className="absolute inset-0 bg-black/30 backdrop-blur-sm" />
@@ -249,7 +241,6 @@ export default function ProductsList() {
           </div>
         </div>
       )}
-
       {isEditModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div onClick={closeEditModal} className="absolute inset-0 bg-black/30 backdrop-blur-sm" />
@@ -258,7 +249,6 @@ export default function ProductsList() {
               <h3 className="text-sm font-black uppercase tracking-widest text-black">Edit Product</h3>
               <p className="text-[10px] text-gray-400 uppercase mt-0.5">Modifying: {productToEdit?.name}</p>
             </div>
-
             <div className="space-y-4">
               <div className="flex flex-col space-y-1">
                 <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Price ($ USD)</label>
@@ -271,7 +261,6 @@ export default function ProductsList() {
                   className="border border-gray-200 px-3 py-2 text-xs focus:outline-none focus:border-black rounded-none"
                 />
               </div>
-
               <div className="flex flex-col space-y-1">
                 <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Present Stock</label>
                 <input
@@ -283,7 +272,6 @@ export default function ProductsList() {
                 />
               </div>
             </div>
-
             <div className="flex justify-end space-x-3 text-xs font-bold uppercase tracking-wider pt-2">
               <button type="button" onClick={closeEditModal} disabled={editLoading} className="px-4 py-2 border border-gray-200 text-gray-500 hover:text-black transition-colors hover:cursor-pointer">Cancel</button>
               <button type="submit" disabled={editLoading} className="px-4 py-2 bg-black text-white hover:bg-gray-900 transition-colors hover:cursor-pointer">

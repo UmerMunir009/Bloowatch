@@ -21,19 +21,16 @@ export default function Navbar() {
     if (!user || !user.name) return 'U';
     return user.name.charAt(0).toUpperCase();
   };
-
+  
   return (
     <header className="w-full bg-white border-b border-gray-200 px-6 md:px-12 py-4 relative z-50 font-sans select-none">
       <div className="max-w-8xl mx-auto flex items-center justify-between">
-
         <Link to="/" className="flex items-center space-x-2">
           <img src={logo} alt="Logo" className="h-8 w-auto object-contain" />
         </Link>
-
         <nav className="hidden md:flex items-center space-x-8 text-sm font-medium text-text-dark">
           <Link to="/" className="hover:text-brand-blue transition-colors">Shop</Link>
           <Link to="/cart" className="hover:text-brand-blue transition-colors">Cart</Link>
-
           {isAuthenticated ? (
             <div className="flex items-center gap-4 border-l border-gray-200 pl-6">
               <div className="flex items-center gap-2">
@@ -56,7 +53,6 @@ export default function Navbar() {
             </>
           )}
         </nav>
-
         <button
           onClick={() => setIsOpen(!isOpen)}
           className="md:hidden p-2 text-text-dark hover:text-brand-blue transition-colors focus:outline-none cursor-pointer"
@@ -65,7 +61,6 @@ export default function Navbar() {
            <div className={`h-6 w-6 ${isOpen ? 'cross-icon' : 'grid-icon'}`} />
         </button>
       </div>
-
       <div
         className={`absolute top-full left-0 w-full bg-white border-b border-gray-200 transition-all duration-200 ease-in-out md:hidden 
           ${isOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'}`}
@@ -73,7 +68,6 @@ export default function Navbar() {
         <nav className="flex flex-col px-6 py-4 space-y-4 text-sm font-medium text-text-dark">
           <Link to="/" onClick={() => setIsOpen(false)} className="hover:text-brand-blue transition-colors py-1">Shop</Link>
           <Link to="/cart" onClick={() => setIsOpen(false)} className="hover:text-brand-blue transition-colors py-1">Cart</Link>
-
           {isAuthenticated ? (
             <div className="pt-2 border-t border-gray-100 flex flex-row gap-3">
               <div className="flex items-center gap-2 py-1">

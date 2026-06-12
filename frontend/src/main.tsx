@@ -6,7 +6,6 @@ import { AuthProvider } from './context/AuthContext';
 import { ToastProvider } from './hooks/useToast.tsx';
 import { CartProvider } from './context/CartContext.tsx';
 
-
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <AuthProvider>

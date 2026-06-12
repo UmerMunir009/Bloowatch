@@ -6,7 +6,7 @@ import { useToast } from '../hooks/useToast';
 interface RouterLocationState {
     id: string;
     title: string;
-    images: string[];   
+    images: string[];
     category: string;
     price: number;
     description?: string;
@@ -23,13 +23,10 @@ export default function ProductDetailPage() {
     const category = productData?.category || 'Uncategorized';
     const imgSrc = productData?.images?.[0] || '';
     const description = productData?.description || 'No description';
-
     const [selectedImage, setSelectedImage] = useState(imgSrc);
     const [quantity, setQuantity] = useState(1);
     const [activeTab, setActiveTab] = useState<'desc' | 'info' | 'reviews'>('desc');
-
     const thumbnails = productData?.images?.length ? productData.images : [imgSrc];
-
     const increment = () => setQuantity((prev) => prev + 1);
     const decrement = () => setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
 
@@ -43,12 +40,10 @@ export default function ProductDetailPage() {
             showToast('Item added to cart successfully!', 'success');
         }
     };
-
+    
     return (
         <main className="max-w-7xl mx-auto px-6 md:px-12 py-12 font-sans text-text-dark">
-
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start mb-16">
-
                 <div className="flex gap-4">
                     <div className="flex flex-col gap-2 w-20 shrink-0">
                         {thumbnails.map((img, idx) => (
@@ -56,13 +51,11 @@ export default function ProductDetailPage() {
                                 key={idx}
                                 onClick={() => setSelectedImage(img)}
                                 className={`aspect-square bg-[#F5F5F5] p-2 border rounded-sm transition-all overflow-hidden flex items-center justify-center cursor-pointer
-                  ${selectedImage === img ? 'border-brand-blue' : 'border-gray-200'}`}
-                            >
+                  ${selectedImage === img ? 'border-brand-blue' : 'border-gray-200'}`}   >
                                 {img && <img src={img} alt={`Thumbnail ${idx + 1}`} className="h-full w-auto object-contain" />}
                             </button>
                         ))}
                     </div>
-
                     <div className="flex-1 aspect-[4/5] bg-[#F5F5F5] rounded-sm flex items-center justify-center p-8 border border-gray-100">
                         {selectedImage && (
                             <img
@@ -73,20 +66,16 @@ export default function ProductDetailPage() {
                         )}
                     </div>
                 </div>
-
                 <div className="flex flex-col">
                     <h1 className="text-2xl font-bold uppercase tracking-wide mb-4">
                         {title}
                     </h1>
-
                     <div className="inline-block px-4 py-1.5 bg-primary-blue rounded-btn text-white font-bold text-sm  w-fit mb-6">
                         $ {price}
                     </div>
-
                     <p className="text-[14px] text-gray-600 leading-relaxed mb-8 max-w-xl">
                         {description}
                     </p>
-
                     <div className="flex items-center gap-6 mb-10 select-none">
                         <div className="flex items-center gap-4 h-12">
                             <input
@@ -95,7 +84,6 @@ export default function ProductDetailPage() {
                                 readOnly
                                 className="w-14 h-12 text-center text-[15px] font-bold text-black border border-gray-300 rounded-sm bg-white outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-spin-button]:appearance-none"
                             />
-
                             <div className="flex flex-col h-full w-7 justify-between items-center py-1">
                                 <button
                                     onClick={increment}
@@ -103,9 +91,7 @@ export default function ProductDetailPage() {
                                 >
                                      <div className="up-arrow-icon h-2 w-2" />
                                 </button>
-
                                 <div className="w-full h-[2px] bg-black" />
-
                                 <button
                                     onClick={decrement}
                                     className="w-full flex items-center justify-center text-black hover:text-brand-blue cursor-pointer transition-colors"
@@ -114,12 +100,10 @@ export default function ProductDetailPage() {
                                 </button>
                             </div>
                         </div>
-
                         <button onClick={addToCartHandler} className="h-12 px-8 border border-gray-300 hover:border-primary-blue hover:bg-primary-blue hover:text-white text-black text-xs font-bold tracking-wider uppercase rounded-sm transition-all duration-200 cursor-pointer bg-transparent">
                             {loading ? 'Adding...' : 'ADD TO CART'}
                         </button>
                     </div>
-
                     <div className="space-y-3 text-xs uppercase font-bold tracking-wide border-t border-gray-100 pt-6">
                         <div>
                             <span className="text-text-dark">SKU:</span>
@@ -135,9 +119,7 @@ export default function ProductDetailPage() {
                         </div>
                     </div>
                 </div>
-
             </div>
-
             <div className="border-t border-gray-200 pt-8">
                 <div className="flex items-center gap-8 border-b border-gray-100 pb-3 mb-6 text-xs uppercase font-bold tracking-wider">
                     <button
@@ -162,7 +144,6 @@ export default function ProductDetailPage() {
                         Reviews (2)
                     </button>
                 </div>
-
                 <div className="text-[14px] leading-relaxed text-gray-500 max-w-5xl min-h-[100px]">
                     {activeTab === 'desc' && <p>{description}</p>}
                     {activeTab === 'info' && (
@@ -176,7 +157,6 @@ export default function ProductDetailPage() {
                         </p>
                     )}
                 </div>
-
             </div>
         </main>
     );
