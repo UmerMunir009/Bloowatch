@@ -1,7 +1,6 @@
 import  { useState, createContext, useContext,type ReactNode } from 'react';
 
 type ToastType = 'success' | 'error';
-
 interface ToastContextType {
   showToast: (message: string, type?: ToastType) => void;
 }
@@ -15,11 +14,10 @@ export function ToastProvider({ children }: { children: ReactNode }) {
     setToast({ message, type });
     setTimeout(() => setToast(null), 3000);
   };
-
+  
   return (
     <ToastContext.Provider value={{ showToast }}>
       {children}
-      
       {toast && (
         <div className="fixed top-5 right-5 z-[9999] animate-fade-in-down font-sans">
           <div className={`px-6 py-3.5 rounded shadow-xl text-white text-[14px] font-bold tracking-wide flex items-center gap-3 min-w-[280px] border
@@ -27,15 +25,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
               ? 'bg-emerald-600 border-emerald-500' 
               : 'bg-rose-600 border-rose-500'}`}
           >
-            {toast.type === 'success' ? (
-              <svg className="w-5 h-5 shrink-0" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-              </svg>
-            ) : (
-              <svg className="w-5 h-5 shrink-0" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
-              </svg>
-            )}
+            <div className={`h-7 w-7 ${toast.type === 'success' ? 'tick-icon' : 'caution-icon'}`} />
             <span>{toast.message}</span>
           </div>
         </div>

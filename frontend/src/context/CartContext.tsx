@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect, type ReactNode, useCallback } from 'react';
+import { createContext, useContext, useState, type ReactNode, useCallback } from 'react';
 import api from '../api/axiosClient';
 import { useAuth } from './AuthContext';
 
@@ -12,7 +12,6 @@ export interface Product {
     stock_quantity: number;
     images: string[];
 }
-
 export interface CartItem {
     id: string;
     userId: string;
@@ -22,7 +21,6 @@ export interface CartItem {
     updatedAt: string;
     product: Product;
 }
-
 interface CartContextType {
     cartItems: CartItem[];
     loading: boolean;
@@ -34,7 +32,6 @@ interface CartContextType {
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
-
 export function CartProvider({ children }: { children: ReactNode }) {
     const { token } = useAuth();
     const [cartItems, setCartItems] = useState<CartItem[]>([]);
@@ -71,7 +68,6 @@ export function CartProvider({ children }: { children: ReactNode }) {
             );
 
             if (res.data.success) {
-                await getCart();
                 return { success: true };
             }
             return { success: false, message: res.data.message };
@@ -138,11 +134,6 @@ export function CartProvider({ children }: { children: ReactNode }) {
         }
     };
 
-    useEffect(() => {
-        if (token) {
-            getCart();
-        }
-    }, [token, getCart]);
 
     return (
         <CartContext.Provider value={{ cartItems, loading, getCart, addToCart, updateQuantity, removeFromCart, clearCart }}>

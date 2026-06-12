@@ -1,8 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { useToast } from '../hooks/useToast';
-
-
 interface ProductProps {
   id: string;
   title: string;
@@ -20,6 +18,7 @@ export default function ProductCard({ id, title, categories, price, images, desc
       state: { id, title, categories, price, images, description }
     });
   };
+
   const { addToCart, loading } = useCart();
   const { showToast } = useToast();
 
@@ -46,7 +45,6 @@ export default function ProductCard({ id, title, categories, price, images, desc
           className="h-[85%] w-auto object-contain pb-2 "
         />
       </div>
-
       <div className="w-full h-12 bg-surface-grey relative overflow-hidden mb-2">
         <button
           onClick={handleAddToCart}
@@ -55,15 +53,12 @@ export default function ProductCard({ id, title, categories, price, images, desc
           {loading ? 'Adding...' : 'ADD TO CART'}
         </button>
       </div>
-
       <h2 className="text-[10px] md:text-[14px] uppercase font-bold text-text-dark tracking-wide mb-1  text-center">
         {title}
       </h2>
-
       <span className="text-[13px] text-primary-blue font-medium mb-3 block text-center">
         {categories.map(cat => cat.name).join(', ')}
       </span>
-
       <div className="px-4 py-1.5 bg-primary-blue text-white font-bold text-[14px] min-w-[50px] text-center rounded-btn">
         $ {price}
       </div>
