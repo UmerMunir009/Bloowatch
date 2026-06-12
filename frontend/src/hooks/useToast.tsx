@@ -1,7 +1,6 @@
 import  { useState, createContext, useContext,type ReactNode } from 'react';
 
 type ToastType = 'success' | 'error';
-
 interface ToastContextType {
   showToast: (message: string, type?: ToastType) => void;
 }
@@ -15,11 +14,10 @@ export function ToastProvider({ children }: { children: ReactNode }) {
     setToast({ message, type });
     setTimeout(() => setToast(null), 3000);
   };
-
+  
   return (
     <ToastContext.Provider value={{ showToast }}>
       {children}
-      
       {toast && (
         <div className="fixed top-5 right-5 z-[9999] animate-fade-in-down font-sans">
           <div className={`px-6 py-3.5 rounded shadow-xl text-white text-[14px] font-bold tracking-wide flex items-center gap-3 min-w-[280px] border
