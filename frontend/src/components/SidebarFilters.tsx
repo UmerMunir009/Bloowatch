@@ -79,8 +79,7 @@ export default function SidebarFilters({
             step={1}
             value={minPrice}
             onChange={handleMinChange}
-            className="absolute w-full h-1 appearance-none bg-transparent cursor-pointer price-range-thumb"
-            style={{ pointerEvents: 'none' }}
+            className="absolute w-full h-1 appearance-none bg-transparent cursor-pointer price-range-thumb pointer-events-none"
           />
           <input
             type="range"
@@ -89,8 +88,7 @@ export default function SidebarFilters({
             step={1}
             value={maxPrice}
             onChange={handleMaxChange}
-            className="absolute w-full h-1 appearance-none bg-transparent cursor-pointer price-range-thumb"
-            style={{ pointerEvents: 'none' }}
+            className="absolute w-full h-1 appearance-none bg-transparent cursor-pointer price-range-thumb pointer-enents-none"
           />
         </div>
         <p className="text-sm text-gray-700 mt-3">
@@ -122,32 +120,6 @@ export default function SidebarFilters({
           ))}
         </ul>
       </div>
-      <style>{`
-        .price-range-thumb {
-          pointer-events: none;
-        }
-        .price-range-thumb::-webkit-slider-thumb {
-          pointer-events: all;
-          -webkit-appearance: none;
-          appearance: none;
-          width: 16px;
-          height: 16px;
-          border-radius: 50%;
-          background: #1A2B8C;
-          cursor: pointer;
-          border: none;
-          box-shadow: none;
-        }
-        .price-range-thumb::-moz-range-thumb {
-          pointer-events: all;
-          width: 16px;
-          height: 16px;
-          border-radius: 50%;
-          background: #1A2B8C;
-          cursor: pointer;
-          border: none;
-        }
-      `}</style>
     </aside>
   );
 }

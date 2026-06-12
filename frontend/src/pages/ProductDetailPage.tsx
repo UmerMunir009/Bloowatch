@@ -89,30 +89,14 @@ export default function ProductDetailPage() {
                                     onClick={increment}
                                     className="w-full flex items-center justify-center text-black hover:text-brand-blue cursor-pointer transition-colors"
                                 >
-                                    <svg
-                                        className="w-3 h-3"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        strokeWidth={3}
-                                        viewBox="0 0 24 24"
-                                    >
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
-                                    </svg>
+                                     <div className="up-arrow-icon h-2 w-2" />
                                 </button>
                                 <div className="w-full h-[2px] bg-black" />
                                 <button
                                     onClick={decrement}
                                     className="w-full flex items-center justify-center text-black hover:text-brand-blue cursor-pointer transition-colors"
                                 >
-                                    <svg
-                                        className="w-3 h-3"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        strokeWidth={3}
-                                        viewBox="0 0 24 24"
-                                    >
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-                                    </svg>
+                                     <div className="down-arrow-icon h-2 w-2" />
                                 </button>
                             </div>
                         </div>

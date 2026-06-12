@@ -54,15 +54,11 @@ export default function LoginPage() {
         <h2 className="text-[22px] font-bold text-black mb-6">Login</h2>
         <form className="space-y-4" onSubmit={handleSubmit} noValidate>
           <div className="relative flex items-center">
-            <span className="absolute left-4 text-gray-400">
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
-              </svg>
-            </span>
-            <input
-              type="email"
-              placeholder="Email"
-              value={formData.email}
+            <span className="email-icon absolute left-4 h-6 w-6" />
+            <input 
+              type="email" 
+              placeholder="Email" 
+               value={formData.email}
               onChange={(e) =>
                 setFormData({ ...formData, email: e.target.value })
               }
@@ -70,14 +66,10 @@ export default function LoginPage() {
             />
           </div>
           <div className="relative flex items-center">
-            <span className="absolute left-4 text-gray-400">
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
-              </svg>
-            </span>
-            <input
-              type={showPassword ? 'text' : 'password'}
-              placeholder="Password"
+            <span className="password-icon absolute left-4 h-6 w-6" />
+            <input 
+              type={showPassword ? 'text' : 'password'} 
+              placeholder="Password" 
               value={formData.password}
               onChange={(e) =>
                 setFormData({ ...formData, password: e.target.value })

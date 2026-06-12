@@ -63,42 +63,30 @@ export default function RegisterPage() {
         <h2 className="text-[22px] font-bold text-black mb-6">Register</h2>
         <form className="space-y-4" onSubmit={handleSubmit} noValidate>
           <div className="relative flex items-center">
-            <span className="absolute left-4 text-gray-400">
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
-              </svg>
-            </span>
-            <input
-              type="text"
-              placeholder="Name"
+            <span className="name-icon absolute left-4 h-6 w-6" />
+            <input 
+              type="text" 
+              placeholder="Name" 
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
               className="w-full pl-11 pr-4 py-3 border border-gray-200 text-[14px] text-black placeholder:text-gray-400 rounded outline-none focus:border-brand-blue transition-colors"
             />
           </div>
           <div className="relative flex items-center">
-            <span className="absolute left-4 text-gray-400">
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
-              </svg>
-            </span>
-            <input
-              type="email"
-              placeholder="Email"
+            <span className="email-icon absolute left-4 h-6 w-6" />
+            <input 
+              type="email" 
+              placeholder="Email" 
               value={formData.email}
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
               className="w-full pl-11 pr-4 py-3 border border-gray-200 text-[14px] text-black placeholder:text-gray-400 rounded outline-none focus:border-brand-blue transition-colors"
             />
           </div>
           <div className="relative flex items-center">
-            <span className="absolute left-4 text-gray-400">
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
-              </svg>
-            </span>
-            <input
-              type={showPassword ? 'text' : 'password'}
-              placeholder="Password"
+            <span className="password-icon absolute left-4 h-6 w-6" />
+            <input 
+              type={showPassword ? 'text' : 'password'} 
+              placeholder="Password" 
               value={formData.password}
               onChange={(e) => setFormData({ ...formData, password: e.target.value })}
               className="w-full pl-11 pr-16 py-3 border border-gray-200 text-[14px] text-black placeholder:text-gray-400 rounded outline-none focus:border-brand-blue transition-colors"
